@@ -1,0 +1,1139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>Hexo 框架 + Github 远程仓库 + Next 主题：搭建自己的 Blog 笔记</title>
+    <url>/hexo+github+next/</url>
+    <content><![CDATA[<h2 id="零、版本参数"><a href="#零、版本参数" class="headerlink" title="零、版本参数"></a>零、版本参数</h2><span id="more"></span>
+
+<ol>
+<li><p>Git bash：2.38.1.windows.1</p>
+</li>
+<li><p>Node.js：v18.12.1</p>
+</li>
+<li><p>npm：8.19.3</p>
+</li>
+<li><p>Hexo：</p>
+<ol>
+<li>hexo-cli: 4.3.0<br>os: win32 10.0.19043<br>node: 18.12.1<br>v8: 10.2.154.15-node.12<br>uv: 1.43.0<br>zlib: 1.2.11<br>brotli: 1.0.9<br>ares: 1.18.1<br>modules: 108<br>nghttp2: 1.47.0<br>napi: 8<br>llhttp: 6.0.10<br>openssl: 3.0.7+quic<br>cldr: 41.0<br>icu: 71.1<br>tz: 2022b<br>unicode: 14.0<br>ngtcp2: 0.8.1<br>nghttp3: 0.7.0</li>
+</ol>
+</li>
+<li><p>Next：8.13.2</p>
+</li>
+</ol>
+<hr>
+<h2 id="一、前置准备"><a href="#一、前置准备" class="headerlink" title="一、前置准备"></a>一、前置准备</h2><ol>
+<li>申请 GitHub 账号；</li>
+<li>安装 Git<ul>
+<li> 注意把自动分支选择 <code>main</code> 而非 <code>master</code>，因为远程仓库预设为 <code>main</code>，如果一个为 <code>main</code> （远程），一个为 <code>master</code> （本地），我遇到融合问题，无法解决 —— 无法 <code>commit</code> &amp; <code>merge</code> branch，尚未找到应对方法；</li>
+</ul>
+</li>
+<li>安装 NodeJS；</li>
+</ol>
+<hr>
+<h2 id="二、远程仓库"><a href="#二、远程仓库" class="headerlink" title="二、远程仓库"></a>二、远程仓库</h2><ol>
+<li>创建新仓库；</li>
+<li>把用户名作为部落格域名；</li>
+<li>新建 <code>index.html</code> 文件（要提交的网页代码先随便填，因为后续会修改）；</li>
+<li>在 Settings &gt; Page 看见网页雏形，表示成功。</li>
+</ol>
+<hr>
+<h2 id="三、本地建站"><a href="#三、本地建站" class="headerlink" title="三、本地建站"></a>三、本地建站</h2><ol>
+<li><p>安装 <code>Hexo</code>，完了查看版本以确认成功（我操作时，无法选择位置，预设在用户文件夹之下，无法更改）；</p>
+<figure class="highlight avrasm"><table><tbody><tr><td class="code"><pre><span class="line">npm install -g hexo-<span class="keyword">cli</span></span><br><span class="line">hexo -v</span><br></pre></td></tr></tbody></table></figure>
+</li>
+<li><p>创建项目，并初始化，文件夹名字可自定义（该名字会自动成为根目录文件夹名字，且同样会位于预设用户文件夹内）；</p>
+<figure class="highlight mipsasm"><table><tbody><tr><td class="code"><pre><span class="line">hexo init lilian-<span class="keyword">blog</span></span><br><span class="line"><span class="keyword"></span>cd lilian-<span class="keyword">blog</span></span><br><span class="line"><span class="keyword"></span>npm <span class="keyword">install</span></span><br></pre></td></tr></tbody></table></figure>
+</li>
+<li><p>本地启动，检验是否成功（浏览器访问 <code>http://localhost:4000</code>）。</p>
+<figure class="highlight axapta"><table><tbody><tr><td class="code"><pre><span class="line">hexo g</span><br><span class="line">hexo <span class="keyword">server</span></span><br></pre></td></tr></tbody></table></figure></li>
+</ol>
+<hr>
+<h2 id="四、安装主题"><a href="#四、安装主题" class="headerlink" title="四、安装主题"></a>四、安装主题</h2><ol>
+<li><p>下载安装 <code>next</code> 主题；</p>
+<figure class="highlight awk"><table><tbody><tr><td class="code"><pre><span class="line">cd 项目文件夹名称（进入文件夹根目录）</span><br><span class="line">git clone https:<span class="regexp">//gi</span>thub.com<span class="regexp">/iissnan/</span>hexo-theme-<span class="keyword">next</span> themes/<span class="keyword">next</span></span><br></pre></td></tr></tbody></table></figure>
+</li>
+<li><p>更换主题为 <code>next</code>：打开根目录 <code>_config.yml</code> 文件（站点配置文件），检索 <code>theme</code> 改 <code>landscape</code> 为 <code>next</code> 。</p>
+<figure class="highlight vbnet"><table><tbody><tr><td class="code"><pre><span class="line"><span class="symbol">theme:</span> <span class="keyword">next</span></span><br></pre></td></tr></tbody></table></figure>
+</li>
+<li><p>本地启动。</p>
+<figure class="highlight ebnf"><table><tbody><tr><td class="code"><pre><span class="line"><span class="attribute">hexo g -d</span></span><br><span class="line"><span class="attribute">hexo s</span></span><br></pre></td></tr></tbody></table></figure></li>
+</ol>
+<hr>
+<h2 id="五、远程部署"><a href="#五、远程部署" class="headerlink" title="五、远程部署"></a>五、远程部署</h2><ol>
+<li>在本地创建 <code>.ssh</code> 秘钥文件夹（自动位于预设用户文件夹，与 hexo-blog 同一个根目录，不可以擅自移动位置）；</li>
+</ol>
+  <figure class="highlight excel"><table><tbody><tr><td class="code"><pre><span class="line">ssh-keygen -<span class="built_in">t</span> rsa -C <span class="string">"GitHub注册邮件地址"</span></span><br></pre></td></tr></tbody></table></figure>
+
+<ol start="2">
+<li><p>生成后，打开用户目录，找到 <code>.ssh\id_rsa.pub</code> 文件，记事本打开并复制里面的内容，打开你的 github 主页，进入个人设置 -&gt; SSH and GPG keys -&gt; New SSH key；</p>
+</li>
+<li><p>测试是否成功；</p>
+</li>
+</ol>
+  <figure class="highlight nginx"><table><tbody><tr><td class="code"><pre><span class="line"><span class="attribute">ssh</span> -T git<span class="variable">@github</span>.com</span><br></pre></td></tr></tbody></table></figure>
+
+<ol start="4">
+<li><p>按照指示创造一段密码（每次远程部署时会用到）&gt; 选择 <code>yes</code> &gt; 看见 用户名 + “successfully” 通知表示成功完成任务，后面的 “does not provide shell access” 没关系；</p>
+</li>
+<li><p>在 Git Bash 登入账号（已登入可免去此步骤）；</p>
+</li>
+</ol>
+  <figure class="highlight stylus"><table><tbody><tr><td class="code"><pre><span class="line">git config <span class="attr">--global</span> user<span class="selector-class">.name</span> <span class="string">"用户名"</span></span><br><span class="line">git config <span class="attr">--global</span> user<span class="selector-class">.email</span> <span class="string">"注册 GitHub 邮箱地址"</span></span><br></pre></td></tr></tbody></table></figure>
+
+<ol start="6">
+<li>安装一键部署插件 <code>hexo-deployer-git</code> ；</li>
+</ol>
+  <figure class="highlight jboss-cli"><table><tbody><tr><td class="code"><pre><span class="line"><span class="keyword">cd</span> 项目文件夹名称</span><br><span class="line">npm install hexo-deployer-git <span class="params">--save</span></span><br></pre></td></tr></tbody></table></figure>
+
+<ol start="7">
+<li>修改根目录站点配置文件夹 <code>_config.yml</code> ，配置 <code>GitHub</code> 相关信息；</li>
+</ol>
+  <figure class="highlight dts"><table><tbody><tr><td class="code"><pre><span class="line"><span class="symbol">deploy:</span></span><br><span class="line"><span class="symbol">  type:</span> git</span><br><span class="line"><span class="symbol">  repo:</span> git@github.com:用户名/用户名.github.io.git</span><br><span class="line"><span class="symbol">  branch:</span> main</span><br></pre></td></tr></tbody></table></figure>
+
+<ol start="8">
+<li><p>删除 blog 根目录文件夹，如 <code>.deploy_git</code> 、<code>.git</code> 、<code>node_modules</code> 、<code>public</code>  等 ，只保留 <code>scaffolds</code> 、<code>source</code> 、<code>themes</code> 文件夹和 <code>.gitignore</code> 、<code>_config.yml</code> 、<code>db.json</code> 、<code>package.json</code> 和 <code>package-lock.json</code> 等；</p>
+</li>
+<li><p>关联 GitHub 项目；</p>
+</li>
+</ol>
+  <figure class="highlight awk"><table><tbody><tr><td class="code"><pre><span class="line">git init</span><br><span class="line">git remote add origin https:<span class="regexp">//gi</span>thub.com<span class="regexp">/用户名/</span>用户名.github.io.git</span><br></pre></td></tr></tbody></table></figure>
+
+<ol start="10">
+<li><p>安装 Hexo；</p>
+<figure class="highlight cmake"><table><tbody><tr><td class="code"><pre><span class="line">npm <span class="keyword">install</span> -g hexo</span><br><span class="line">npm <span class="keyword">install</span></span><br><span class="line">hexo g -d</span><br></pre></td></tr></tbody></table></figure>
+</li>
+<li><p>如果成功部署，能够浏览网页，表示大功告成。若第 9-10 步失败，则尝试按照报错提示操作，再回到相应步骤。</p>
+</li>
+</ol>
+<hr>
+<h2 id="六、主题优化"><a href="#六、主题优化" class="headerlink" title="六、主题优化"></a>六、主题优化</h2><h4 id="（一）修改浏览器-tab-页名称、作者"><a href="#（一）修改浏览器-tab-页名称、作者" class="headerlink" title="（一）修改浏览器 tab 页名称、作者"></a>（一）修改浏览器 tab 页名称、作者</h4><figure class="highlight avrasm"><table><tbody><tr><td class="code"><pre><span class="line"><span class="meta"># Site</span></span><br><span class="line"><span class="symbol">title:</span> 站名</span><br><span class="line">……</span><br><span class="line"><span class="symbol">author:</span> 英文名 | 中文名</span><br></pre></td></tr></tbody></table></figure>
+
+<h4 id="（二）更改主题样式"><a href="#（二）更改主题样式" class="headerlink" title="（二）更改主题样式"></a>（二）更改主题样式</h4><p>检索 <code>Schemes</code>  ，内含四种 Next 样式，去除掉 <code>Gemini</code> 前面的 <code>#</code> 。</p>
+<h4 id="（三）更改网页图标"><a href="#（三）更改网页图标" class="headerlink" title="（三）更改网页图标"></a>（三）更改网页图标</h4><p>在 <code>next</code> <code>config.yml</code> 检索 <code>favicon</code> ，把事先放入 themes &gt; next &gt; source &gt; images 的图像链接替换即可（包括 <code>small</code> 和 <code>medium</code> 2 张）。</p>
+<h4 id="（四）更改头像"><a href="#（四）更改头像" class="headerlink" title="（四）更改头像"></a>（四）更改头像</h4><p>在 <code>next</code> <code>config.yml</code> 检索 <code>avatar</code> 把事先放入 themes &gt; next &gt; source &gt; images 的头像链接替换，并将 <code>displayed in circle</code> 改为 <code>true</code> 。</p>
+<h4 id="（五）设置-分类-、-标签-、-关于我-等新页面，加入首页导航中"><a href="#（五）设置-分类-、-标签-、-关于我-等新页面，加入首页导航中" class="headerlink" title="（五）设置 分类 、 标签 、 关于我 等新页面，加入首页导航中"></a>（五）设置 <code>分类</code> 、 <code>标签</code> 、 <code>关于我</code> 等新页面，加入首页导航中</h4><ol>
+<li><p>在 <code>next</code> <code>config.yml</code> 检索 <code>menu</code> ，然后将 <code>about</code> 、 <code>tags</code> 、 <code>categories</code> 、 <code>archives</code>  等所需项目前面的 <code>#</code> 去掉；</p>
+</li>
+<li><p>Git Bash 执行以下指令：</p>
+<figure class="highlight excel"><table><tbody><tr><td class="code"><pre><span class="line">hexo <span class="built_in">n</span> page categories</span><br><span class="line">hexo <span class="built_in">n</span> page tags</span><br><span class="line">hexo <span class="built_in">n</span> page about</span><br></pre></td></tr></tbody></table></figure>
+</li>
+<li><p>于站点根目录 <code>source</code> 文件夹中，对应名字的文件夹分别找到它们的 <code>.md</code> 文档，在 3 份文档的文件首部信息，个别在 <code>title</code> 和 <code>date</code> 下方添加 <code>type: "about"</code> 、 <code>type: "tags"</code> 、 <code>type: "categpries"</code> ，注意冒号后必须有空格和开关引号。可以把全部 <code>title</code> 首字母改为大写，否则在网页呈现时，就会全是小写字母。</p>
+</li>
+</ol>
+<h4 id="（六）侧边栏社交链接设置"><a href="#（六）侧边栏社交链接设置" class="headerlink" title="（六）侧边栏社交链接设置"></a>（六）侧边栏社交链接设置</h4><p>在 <code>next</code> <code>config.yml</code> 检索 <code>Social Links</code> ，在自己需要的选项前去除掉 <code>#</code> 符号，接着修改条目后面的链接为自己的资料，即可显示。</p>
+<h4 id="（七）搜寻功能设置"><a href="#（七）搜寻功能设置" class="headerlink" title="（七）搜寻功能设置"></a>（七）搜寻功能设置</h4><ol>
+<li><p>安装配置：</p>
+<figure class="highlight ada"><table><tbody><tr><td class="code"><pre><span class="line">npm install hexo-generator-searchdb <span class="comment">--save</span></span><br></pre></td></tr></tbody></table></figure>
+</li>
+<li><p>在 <code>next</code> <code>config.yml</code> 检索 <code>local_search</code> ，把 <code>enable</code> 改为 <code>true</code> ；</p>
+</li>
+<li><p>在根目录的站点配置文件 <code>_config.yml</code> 中加入搜索配置（extensions 下方）：</p>
+<figure class="highlight dts"><table><tbody><tr><td class="code"><pre><span class="line"><span class="symbol">search:</span></span><br><span class="line"><span class="symbol">  path:</span> search.xml</span><br><span class="line"><span class="symbol">  field:</span> post</span><br><span class="line"><span class="symbol">  format:</span> html</span><br><span class="line"><span class="symbol">  limit:</span> <span class="number">10000</span></span><br></pre></td></tr></tbody></table></figure></li>
+</ol>
+<h4 id="（八）设置-RSS-订阅"><a href="#（八）设置-RSS-订阅" class="headerlink" title="（八）设置 RSS 订阅"></a>（八）设置 RSS 订阅</h4><ol>
+<li><p>安装配置：</p>
+<figure class="highlight ada"><table><tbody><tr><td class="code"><pre><span class="line">npm install hexo-generator-feed <span class="comment">--save</span></span><br></pre></td></tr></tbody></table></figure>
+</li>
+<li><p>在根目录的站点配置文件 <code>_config.yml</code> 中，添加 <code>plugin</code> 项目于 <code>extensions</code> 下方：</p>
+<figure class="highlight avrasm"><table><tbody><tr><td class="code"><pre><span class="line"><span class="symbol">plugins:</span> </span><br><span class="line">  hexo-generator-feed</span><br><span class="line"><span class="meta">#Feed Atom</span></span><br><span class="line"><span class="symbol">feed:</span></span><br><span class="line"><span class="symbol">type:</span> atom</span><br><span class="line"><span class="symbol">path:</span> atom.xml</span><br><span class="line"><span class="symbol">limit:</span> <span class="number">20</span></span><br></pre></td></tr></tbody></table></figure>
+</li>
+<li><p>在 <code>next</code> <code>config.yml</code> 检索 <code>Social Links</code> ，把 <code>RSS</code> 条目前的 <code>#</code> 去除 。</p>
+</li>
+</ol>
+<h4 id="（九）提交站点-sitemap"><a href="#（九）提交站点-sitemap" class="headerlink" title="（九）提交站点 sitemap"></a>（九）提交站点 sitemap</h4><ol>
+<li><p>安装配置：</p>
+<figure class="highlight ada"><table><tbody><tr><td class="code"><pre><span class="line">npm install hexo-generator-sitemap <span class="comment">--save</span></span><br></pre></td></tr></tbody></table></figure>
+</li>
+<li><p>在根目录的站点配置文件 <code>_config.yml</code> 中加入站点地图（extensions 下方）：</p>
+<figure class="highlight dts"><table><tbody><tr><td class="code"><pre><span class="line"><span class="meta"># sitemap</span></span><br><span class="line"><span class="symbol">sitemap:</span></span><br><span class="line"><span class="symbol">  path:</span> sitemap.xml</span><br></pre></td></tr></tbody></table></figure></li>
+</ol>
+<h4 id="（十）卜算子统计功能设置"><a href="#（十）卜算子统计功能设置" class="headerlink" title="（十）卜算子统计功能设置"></a>（十）卜算子统计功能设置</h4><p> 在 <code>next</code> <code>config.yml</code> 检索 <code>busuanzi</code> ，把 <code>enable</code> 、 <code>total_visitors</code> 、 <code>total_views</code> 和 <code>post_views</code> 全改为 <code>true</code> 。</p>
+<ul>
+<li>【效果图见 <code>（二十四）</code> 条目配图】</li>
+</ul>
+<h4 id="（十一）侧边栏章节目录设置"><a href="#（十一）侧边栏章节目录设置" class="headerlink" title="（十一）侧边栏章节目录设置"></a>（十一）侧边栏章节目录设置</h4><p>在 <code>next</code> <code>config.yml</code> 检索 <code>toc</code> ，把 <code>enable</code> 和 <code>wrap</code> 设为 <code>true</code> ； <code>number</code> 设为 <code>false</code> ； <code>max_depth</code> 设为 <code>3</code> 。</p>
+<h4 id="（十二）Disqus-评论功能设置"><a href="#（十二）Disqus-评论功能设置" class="headerlink" title="（十二）Disqus 评论功能设置"></a>（十二）Disqus 评论功能设置</h4><ol>
+<li>到点选 <code>GET STARTED</code> 注册 <code>disqus</code> 账号，然后选择 <code>I want to install Disqus on my site</code> ；</li>
+<li>依照后续指示填写相应资料： <code>Website Name</code> 、 <code>Category</code> 和 <code>Language</code> ；</li>
+</ol>
+<ul>
+<li>Website Name: 要注意这里是你的 disqus 专属网址的名称，会是 shortname.disqus.com</li>
+</ul>
+<ol start="3">
+<li> 进到购买计划的部分，选择 <code>basic</code>  并点击 <code>Subscribe Now</code> ；</li>
+<li>下一页，拖到最后，选择 <code>I dont't see my platform listed, install manually with Universal Code</code> ；</li>
+<li>下一页，选择 <code>Balanced</code> 模式，就暂告一段落；</li>
+<li>回到本地，在 <code>next</code> <code>config.yml</code> 检索 <code>disqus</code> ，把 <code>enable</code> 和 <code>count</code> 改为 <code>true</code> ，<code>shortname</code> 则输入前面注册流程中填写的 <code>Website Name</code> 。</li>
+</ol>
+<h4 id="（十三）于首页显示文章摘要的-Read-More-按钮设置"><a href="#（十三）于首页显示文章摘要的-Read-More-按钮设置" class="headerlink" title="（十三）于首页显示文章摘要的 Read More 按钮设置"></a>（十三）于首页显示文章摘要的 Read More 按钮设置</h4><ol>
+<li><p>在 <code>next</code> <code>config.yml</code> 检索 <code>Read more button</code> ，将 <code>read_more_btn</code> 部分修改为 <code>true</code> ；</p>
+</li>
+<li><p>于每篇文章前面部分适当的地方，手动加入分割 <code>&lt;!--more--&gt;</code> 。</p>
+</li>
+</ol>
+<ul>
+<li>【效果图见 <code>（二十六）</code> 条目配图】</li>
+</ul>
+<h4 id="（十四）增加转载或引用文章的版权声明设置"><a href="#（十四）增加转载或引用文章的版权声明设置" class="headerlink" title="（十四）增加转载或引用文章的版权声明设置"></a>（十四）增加转载或引用文章的版权声明设置</h4><ol>
+<li>在 <code>next</code> <code>config.yml</code> 检索 <code>license</code> ，将 <code>Creative Commons 4.0 International Licens</code> 部分 <code>creative_commons</code> 的 <code>post</code> 修改为 <code>true</code> ；</li>
+<li>到根目录的站点配置文件 <code>_config.yml</code> 中，检索 <code>url</code> ，改 <code>http://example.com</code> 为自己的网址，如 <code>https://GitHub 用户名 .github.io</code></li>
+</ol>
+<h4 id="（十五）阅览百分比"><a href="#（十五）阅览百分比" class="headerlink" title="（十五）阅览百分比"></a>（十五）阅览百分比</h4><p>在 <code>next</code> <code>config.yml</code> 检索 <code>scrollpercent</code> ，把 <code>false</code> 改为 <code>true</code> ；</p>
+<ul>
+<li>【效果图见 <code>（二十四）</code> 条目配图】</li>
+</ul>
+<h4 id="（十六）修改底部版权间隔红心图标"><a href="#（十六）修改底部版权间隔红心图标" class="headerlink" title="（十六）修改底部版权间隔红心图标"></a>（十六）修改底部版权间隔红心图标</h4><p>在 <code>next</code> <code>config.yml</code> 检索 <code>Social Links</code> ，于 <code>name</code> 修改为 <code>fa fa-user</code> 把红心替换掉，颜色代码则使用自己喜欢的颜色 Hex Code，如 <code>#808080</code>、 <code>#00aa90</code> 等；</p>
+<ul>
+<li>【效果图见 <code>（二十四）</code> 条目配图】</li>
+</ul>
+<h4 id="（十七）修改网站底部年份"><a href="#（十七）修改网站底部年份" class="headerlink" title="（十七）修改网站底部年份"></a>（十七）修改网站底部年份</h4><p>在 <code>next</code> <code>config.yml</code> 检索 <code>footer</code> ，于 <code>since</code> 修改对应年份；</p>
+<ul>
+<li>【效果图见 <code>（二十四）</code> 条目配图】</li>
+</ul>
+<h4 id="（十八）修改文章底部-标签样式为图标"><a href="#（十八）修改文章底部-标签样式为图标" class="headerlink" title="（十八）修改文章底部 # 标签样式为图标"></a>（十八）修改文章底部 <code>#</code> 标签样式为图标</h4><p>在 <code>next</code> <code>config.yml</code> 检索 <code>tag_icon</code> ，将 <code>Use icon instead of the symbol # to indicate the tag at the bottom of the post     tag_icon</code> 设为 <code>true</code> 。 </p>
+<h4 id="（十九）取消分类、标签等页面的评论框"><a href="#（十九）取消分类、标签等页面的评论框" class="headerlink" title="（十九）取消分类、标签等页面的评论框"></a>（十九）取消分类、标签等页面的评论框</h4><p>在个别对应的 <code>index.html</code> 文档首部资料中，加入一行 <code>comments: false</code> 即可。具体存放位置，参见本节 <code>第（五）条第三小节</code> 。</p>
+<h4 id="（二十）文章末端相关文章自动推荐"><a href="#（二十）文章末端相关文章自动推荐" class="headerlink" title="（二十）文章末端相关文章自动推荐"></a>（二十）文章末端相关文章自动推荐</h4><p>（已执行，未显现出来，成败未可知）</p>
+<ol>
+<li><p>安装配置：</p>
+<figure class="highlight ada"><table><tbody><tr><td class="code"><pre><span class="line">npm install hexo-related-popular-posts <span class="comment">--save</span></span><br></pre></td></tr></tbody></table></figure>
+</li>
+<li><p>在 <code>next</code> <code>config.yml</code> 检索 <code>Related popular posts</code> ，把 <code>enable</code> 和 <code>display_in_home</code> 修改为 <code>true</code> ，在下一行加入以下配置：</p>
+<figure class="highlight lasso"><table><tbody><tr><td class="code"><pre><span class="line">display_in_home: <span class="literal">true</span></span><br><span class="line"><span class="keyword">params</span>:</span><br><span class="line">  maxCount: <span class="number">5</span></span><br><span class="line">  #PPMixingRate: <span class="number">0.4</span></span><br><span class="line">  #isDate: <span class="literal">false</span></span><br><span class="line">  #isImage: <span class="literal">false</span></span><br><span class="line">  #isExcerpt: <span class="literal">false</span></span><br></pre></td></tr></tbody></table></figure></li>
+</ol>
+<h4 id="（二十一）首页侧边栏热门文章自动推荐"><a href="#（二十一）首页侧边栏热门文章自动推荐" class="headerlink" title="（二十一）首页侧边栏热门文章自动推荐"></a>（二十一）首页侧边栏热门文章自动推荐</h4><p>（有可能同上，已执行，未显现出来，成败未可知）</p>
+<h4 id="（二十二）分享符号按钮及功能设置"><a href="#（二十二）分享符号按钮及功能设置" class="headerlink" title="（二十二）分享符号按钮及功能设置"></a>（二十二）分享符号按钮及功能设置</h4><p>（未完待续）</p>
+<h4 id="（二十三）GitHub-贡献日历设置"><a href="#（二十三）GitHub-贡献日历设置" class="headerlink" title="（二十三）GitHub 贡献日历设置"></a>（二十三）GitHub 贡献日历设置</h4><ol>
+<li><p>打开 Blog &gt; themes &gt; next &gt; layout 目录下的 <code>_layout.njk</code> 文件；</p>
+</li>
+<li><p>找到&nbsp;<code>{%- include '_partials/header/sub-menu.njk' -%}</code>，在这条 twig 语句下方添加如下代码：</p>
+<figure class="highlight ada"><table><tbody><tr><td class="code"><pre><span class="line">{%- <span class="keyword">if</span> page.<span class="keyword">type</span> <span class="type">!== </span><span class="symbol">'categories</span>' <span class="keyword">and</span> page.<span class="keyword">type</span> <span class="type">!== </span><span class="symbol">'tags</span>' <span class="keyword">and</span> page.<span class="keyword">type</span> <span class="type">!== </span><span class="symbol">'schedule</span>' <span class="keyword">and</span> page.<span class="keyword">type</span> <span class="type">!== </span><span class="symbol">'works</span>' <span class="keyword">and</span> page.<span class="keyword">type</span> <span class="type">!== </span><span class="symbol">'about</span>' <span class="keyword">and</span> page.<span class="keyword">type</span> <span class="type">!== </span><span class="symbol">'post</span>'%}</span><br><span class="line">	&lt;div class=<span class="string">"post-block animated fadeIn"</span>&gt;</span><br><span class="line">		&lt;h5 class=<span class="string">"post-title"</span> itemprop=<span class="string">"name headline"</span>&gt;</span><br><span class="line">			&lt;a href=<span class="string">"https://github.com/你的Github用户名"</span> class=<span class="string">"post-title-link"</span> itemprop=<span class="string">"url"</span>&gt;Github Contribution Calendar&lt;/a&gt;</span><br><span class="line">		&lt;/h5&gt;</span><br><span class="line">		&lt;div class=<span class="string">"post-body animated fadeInDown"</span> itemprop=<span class="string">"articleBody"</span>&gt;</span><br><span class="line">			&lt;img style=<span class="string">"width: 100%; margin-top: 30px;"</span> src=<span class="string">"https://ghchart.rshah.org/e77c8e/你的Github用户名"</span> alt=<span class="string">"你的Github用户名's Blue Github Chart"</span> /&gt;</span><br><span class="line">		&lt;/div&gt;</span><br><span class="line">	&lt;/div&gt;</span><br><span class="line">{%- endif %}</span><br></pre></td></tr></tbody></table></figure>
+</li>
+<li><p>注意修改 其中 3 处为自己的 GitHub 用户名；</p>
+</li>
+<li><p><code>ghchart.rshah.org/e77c8e/</code> 后面这六码是 Hex Code，可修改为自己喜欢的颜色；</p>
+</li>
+<li><p>第一个大括号内的代码，要根据自己 Blog 的需求修改，以下引用大佬原文：</p>
+<blockquote>
+<p>其中，page.type 是在对应页面的 index.md 文件的首部设置的，语句为 type: “对应类型”。<br>以 about 页面为例，page.type 在 Blog\source\about 目录下的 index.md 文件的首部添加 type: “about”，如下（省略原出处引用的图片）：<br>因此，如果你不想在你的每篇文章顶部都显示贡献日历，那么你将不得不在每篇文章的 Markdown 文件首部都添加 type: “post”。（我在根目录底下的 <code>scaffolds</code> 文件夹的 <code>post.md</code> 文件首部添加了一次 <code>type: "post"</code> ，目前不需要每次都手动添加）<br>另外，如果你想让贡献日历显示在 about 页面，只需要将 page.type !== ‘about’ 删掉即可。</p>
+</blockquote>
+</li>
+</ol>
+<ul>
+<li><p>效果图：</p>
+<p><img src="/hexo+github+next/git-contribution-map.png" alt="git-contribution-map"></p>
+</li>
+</ul>
+<h4 id="（二十四）网站底部加上-“今日诗词”"><a href="#（二十四）网站底部加上-“今日诗词”" class="headerlink" title="（二十四）网站底部加上 “今日诗词”"></a>（二十四）网站底部加上 “今日诗词”</h4><p>在根目录 &gt; themes &gt; next &gt; layout &gt; <code>_layout.njk</code> 中 <code>footer</code> 部分，加入以下代码：</p>
+   <figure class="highlight xml"><table><tbody><tr><td class="code"><pre><span class="line">     <span class="tag">&lt;<span class="name">footer</span> <span class="attr">id</span>=<span class="string">"footer"</span> <span class="attr">role</span>=<span class="string">"contentinfo"</span>&gt;</span></span><br><span class="line">    </span><br><span class="line">   <span class="tag">&lt;<span class="name">span</span> <span class="attr">id</span>=<span class="string">"jinrishici-sentence"</span>&gt;</span>正在加载今日诗词....<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"https://sdk.jinrishici.com/v2/browser/jinrishici.js"</span> <span class="attr">charset</span>=<span class="string">"utf-8"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">footer</span>&gt;</span><span class="comment">&lt;!-- end #footer --&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<ul>
+<li><p>完成后，示例如下：</p>
+ <figure class="highlight handlebars"><table><tbody><tr><td class="code"><pre><span class="line"><span class="language-xml">  <span class="tag">&lt;<span class="name">footer</span> <span class="attr">class</span>=<span class="string">"footer"</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"footer-inner"</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      {%- include '_partials/languages.njk' -%}</span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">footer</span> <span class="attr">id</span>=<span class="string">"footer"</span> <span class="attr">role</span>=<span class="string">"contentinfo"</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">span</span> <span class="attr">id</span>=<span class="string">"jinrishici-sentence"</span>&gt;</span>正在加载今日诗词....<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"https://sdk.jinrishici.com/v2/browser/jinrishici.js"</span> <span class="attr">charset</span>=<span class="string">"utf-8"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;/<span class="name">footer</span>&gt;</span><span class="comment">&lt;!-- end #footer --&gt;</span></span></span><br><span class="line"><span class="language-xml"></span></span><br><span class="line"><span class="language-xml">      </span><span class="template-variable">{{ <span class="name"><span class="built_in">partial</span></span>(<span class="name">'_partials/footer.njk'</span>, {}, {cache: theme.cache.enable}) }}</span><span class="language-xml"></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">  <span class="tag">&lt;/<span class="name">footer</span>&gt;</span></span></span><br></pre></td></tr></tbody></table></figure>
+</li>
+<li><p>效果图：</p>
+<p><img src="/hexo+github+next/%E4%BB%8A%E6%97%A5%E8%AF%97%E8%AF%8D%E6%95%88%E6%9E%9C.png" alt="今日诗词效果"></p>
+</li>
+</ul>
+<h4 id="（二十五）支持数学代码设置"><a href="#（二十五）支持数学代码设置" class="headerlink" title="（二十五）支持数学代码设置"></a>（二十五）支持数学代码设置</h4><p>（未完待续）</p>
+<h4 id="（二十六）文章置顶设置"><a href="#（二十六）文章置顶设置" class="headerlink" title="（二十六）文章置顶设置"></a>（二十六）文章置顶设置</h4><ol>
+<li><p>安装配置：</p>
+<figure class="highlight fortran"><table><tbody><tr><td class="code"><pre><span class="line">npm uninstall hexo-generator-<span class="built_in">index</span> --<span class="keyword">save</span></span><br><span class="line">npm install hexo-generator-<span class="built_in">index</span>-pin-top --<span class="keyword">save</span></span><br></pre></td></tr></tbody></table></figure>
+</li>
+<li><p><strong>图标配置</strong>：打开 /themes/next/layout/_macro/ 目录下的 post.njk 文件，在以下代码的下方，插入再下显示的代码：</p>
+<figure class="highlight handlebars"><table><tbody><tr><td class="code"><pre><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"post-meta-container"</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">          </span><span class="template-variable">{{ <span class="name"><span class="built_in">partial</span></span>(<span class="name">'_partials/post/post-meta.njk'</span>) }}</span></span><br></pre></td></tr></tbody></table></figure>
+
+<figure class="highlight django"><table><tbody><tr><td class="code"><pre><span class="line"><span class="template-tag">{% <span class="name"><span class="name">if</span></span> post.top %}</span><span class="language-xml"></span></span><br><span class="line"><span class="language-xml">  <span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">"fa fa-thumb-tack"</span> <span class="attr">style</span>=<span class="string">"color: #00aa90"</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">  <span class="tag">&lt;<span class="name">font</span> <span class="attr">color</span>=<span class="string">00aa90</span>&gt;</span>Top<span class="tag">&lt;/<span class="name">font</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">  <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"post-meta-divider"</span>&gt;</span>|<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"></span><span class="template-tag">{% <span class="name"><span class="name">endif</span></span> %}</span></span><br></pre></td></tr></tbody></table></figure>
+</li>
+<li><p><code>Top</code> 文字和图标两者的颜色，可以使用自己喜欢的颜色 Hex Code；</p>
+</li>
+<li><p>于要置顶的文章文档首部资料加上一行 <code>top: true</code> ；</p>
+</li>
+<li><p>如果文章 &gt;1，可设置 top 的值（大的在前面）以控制顺序，即在 <code>top: true</code> 下一行加上 <code>top: 1</code> 或 <code>top: 10</code> 等 —— 数值越大的文章，会排在越靠前的位置。</p>
+</li>
+</ol>
+<ul>
+<li><p>效果图：</p>
+<p><img src="/hexo+github+next/%E6%96%87%E7%AB%A0%E7%BD%AE%E9%A1%B6%E6%95%88%E6%9E%9C.png" alt="文章置顶效果"></p>
+</li>
+</ul>
+<h4 id="（二十七）萌宠-x2F-部落格宠物配置"><a href="#（二十七）萌宠-x2F-部落格宠物配置" class="headerlink" title="（二十七）萌宠/部落格宠物配置"></a>（二十七）萌宠 / 部落格宠物配置</h4><ol>
+<li><p>安装配置：</p>
+<figure class="highlight ada"><table><tbody><tr><td class="code"><pre><span class="line">npm install <span class="comment">--save hexo-helper-live2d</span></span><br></pre></td></tr></tbody></table></figure>
+</li>
+<li><p>选择模型</p>
+<figure class="highlight autohotkey"><table><tbody><tr><td class="code"><pre><span class="line">npm install live2d-widget-model-模型名（我用的是 `wanko` ）</span><br></pre></td></tr></tbody></table></figure>
+</li>
+<li><p>在根目录的站点配置文件 <code>_config.yml</code> 中，添加 <code>live2d</code> 项目于 <code>extensions</code> 下方：</p>
+<figure class="highlight yaml"><table><tbody><tr><td class="code"><pre><span class="line"><span class="attr">live2d:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">scriptFrom:</span> <span class="string">local</span></span><br><span class="line">  <span class="attr">pluginRootPath:</span> <span class="string">live2dw/</span></span><br><span class="line">  <span class="attr">pluginJsPath:</span> <span class="string">lib/</span></span><br><span class="line">  <span class="attr">pluginModelPath:</span> <span class="string">assets/</span></span><br><span class="line">  <span class="attr">tagMode:</span> <span class="literal">false</span></span><br><span class="line">  <span class="attr">debug:</span> <span class="literal">false</span></span><br><span class="line">  <span class="attr">model:</span></span><br><span class="line">    <span class="attr">use:</span> <span class="string">live2d-widget-model-wanko</span></span><br><span class="line">  <span class="attr">display:</span></span><br><span class="line">    <span class="attr">position:</span> <span class="string">left</span></span><br><span class="line">    <span class="attr">width:</span> <span class="number">145</span></span><br><span class="line">    <span class="attr">height:</span> <span class="number">150</span></span><br><span class="line">  <span class="attr">mobile:</span></span><br><span class="line">    <span class="attr">show:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">react:</span></span><br><span class="line">    <span class="attr">opacity:</span> <span class="number">0.7</span></span><br></pre></td></tr></tbody></table></figure></li>
+</ol>
+<ul>
+<li>【效果图见 <code>23.</code> 条目配图】</li>
+</ul>
+<h4 id="（二十八）打赏功能设置"><a href="#（二十八）打赏功能设置" class="headerlink" title="（二十八）打赏功能设置"></a>（二十八）打赏功能设置</h4><ol>
+<li><p>在 <code>next</code> <code>config.yml</code> 检索 <code>reward_settings</code> ，把 <code>enable</code> 、 改为 <code>true</code> ;</p>
+</li>
+<li><p>于 <code>reward</code> 处清单，去掉所需选项前面的 <code>#</code> ，并将事先放入 themes &gt; next &gt; source &gt; images 的二维码链接替换。</p>
+</li>
+</ol>
+<h4 id="（二十九）Liker-功能设置"><a href="#（二十九）Liker-功能设置" class="headerlink" title="（二十九）Liker 功能设置"></a>（二十九）Liker 功能设置</h4><p>（未完待续）</p>
+<h4 id="（三十）Google-Adsense-功能设置"><a href="#（三十）Google-Adsense-功能设置" class="headerlink" title="（三十）Google Adsense 功能设置"></a>（三十）Google Adsense 功能设置</h4><p>（未完待续）</p>
+<h4 id="（三十一）增加其他新页面"><a href="#（三十一）增加其他新页面" class="headerlink" title="（三十一）增加其他新页面"></a>（三十一）增加其他新页面</h4><p>做法于新增 <code>About</code> 、 <code>Categories</code> 、 <code>Tags</code> 等一样，可参考官方文档，但是我自己的尝试一直有 bug ，即在导航侧边栏的清单，图标后文字与原有的文字对不准，尝试了各种方案也没找到正确的解决方法，暂时先用 <code>.</code> 和空格糊弄过去。TvT 网上似乎没找到有人拥有一样的问题。</p>
+<ul>
+<li>记得处理好之后，到 themes &gt; next &gt; languages &gt; en.yml 文档中 <code>menu</code> 清单去添加自己新增的页面翻译。</li>
+</ul>
+<h2 id="七、基本操作"><a href="#七、基本操作" class="headerlink" title="七、基本操作"></a>七、基本操作</h2><h4 id="（一）常用-git-指令"><a href="#（一）常用-git-指令" class="headerlink" title="（一）常用 git 指令"></a>（一）常用 git 指令</h4><ol>
+<li><p>登入关联账号：</p>
+<figure class="highlight stylus"><table><tbody><tr><td class="code"><pre><span class="line">git config <span class="attr">--global</span> user<span class="selector-class">.name</span> <span class="string">"用户名"</span></span><br><span class="line">git config <span class="attr">--global</span> user<span class="selector-class">.email</span> <span class="string">"用户邮箱地址"</span></span><br></pre></td></tr></tbody></table></figure>
+</li>
+<li><p><code>cd blog根目录文件夹名称</code> 进入文件夹</p>
+</li>
+</ol>
+<h4 id="（二）常用-Hexo-指令"><a href="#（二）常用-Hexo-指令" class="headerlink" title="（二）常用 Hexo 指令"></a>（二）常用 Hexo 指令</h4><ol>
+<li>hexo clean /hexo c：清除；</li>
+<li>hexo generate /hexo g：生成；</li>
+<li>hexo deploy /hexo d：远程部署；</li>
+<li>hexo server /hexo s：伺服器页面展示；</li>
+<li>hexo g -d：快速生成部署（一键生成、推送到远程仓库）</li>
+<li>hexo c &amp;&amp; hexo g &amp;&amp; hexo d：一键三连。</li>
+</ol>
+<ul>
+<li>一旦使用 <code>hexo deploy</code> 或是包含 <code>hexo d</code> 指令，就需要输入配置 .ssh 秘钥时设置的那串密码。</li>
+</ul>
+<h4 id="（三）创建文章"><a href="#（三）创建文章" class="headerlink" title="（三）创建文章"></a>（三）创建文章</h4>  <figure class="highlight excel"><table><tbody><tr><td class="code"><pre><span class="line">hexo <span class="built_in">n</span> post 文章名字</span><br></pre></td></tr></tbody></table></figure>
+
+
+
+<h4 id="（四）-引用图像-x2F-插入图片"><a href="#（四）-引用图像-x2F-插入图片" class="headerlink" title="（四） 引用图像/插入图片"></a>（四） 引用图像 / 插入图片</h4><p>安装插件 &gt; 修改配置文件 &gt; 文章文档以 Markdown 语法插入图片即可；</p>
+   <figure class="highlight awk"><table><tbody><tr><td class="code"><pre><span class="line">npm install https:<span class="regexp">//gi</span>thub.com<span class="regexp">/CodeFalling/</span>hexo-asset-image --save</span><br></pre></td></tr></tbody></table></figure>
+
+<ol>
+<li><p>在 <code>next</code> <code>config.yml</code> 检索 <code>post_asset_folder</code> ，修改为 <code>true</code> ；</p>
+<figure class="highlight yaml"><table><tbody><tr><td class="code"><pre><span class="line"><span class="attr">post_asset_folder:</span> <span class="literal">true</span></span><br></pre></td></tr></tbody></table></figure>
+</li>
+<li><p>完成上步设置后，我们新建文章的同时，也会创建与文章同名的文件夹用来存放图片；</p>
+</li>
+<li><p>文档中插入图片的 Markdown 语法示例如下，注意斜杠放反了，就会失败，导致图片无法显示：</p>
+</li>
+</ol>
+   <figure class="highlight scss"><table><tbody><tr><td class="code"><pre><span class="line">!<span class="selector-attr">[图片名称]</span>(文章即文件夹名称/图片名称.png)</span><br></pre></td></tr></tbody></table></figure>
+
+
+
+<h4 id="（五）插入-YouTube-影片"><a href="#（五）插入-YouTube-影片" class="headerlink" title="（五）插入 YouTube 影片"></a>（五）插入 YouTube 影片</h4><p>可添加代码如下：</p>
+<figure class="highlight django"><table><tbody><tr><td class="code"><pre><span class="line"><span class="template-tag">{% <span class="name">youtube</span> video_id %}</span></span><br></pre></td></tr></tbody></table></figure>
+
+<ul>
+<li>其中，video_id 需用自己影片 ID 替换，例如， X85DcsKHaUo</li>
+</ul>
+<h4 id="（六）实现文章多级分类"><a href="#（六）实现文章多级分类" class="headerlink" title="（六）实现文章多级分类"></a>（六）实现文章多级分类</h4><p>在文章文档首部资料内的 <code>categories</code> 条目中，用；列清单的方式写入多个类别，示例如下：</p>
+   <figure class="highlight nestedtext"><table><tbody><tr><td class="code"><pre><span class="line"><span class="attribute">categories</span><span class="punctuation">:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">工具</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">hexo</span></span><br></pre></td></tr></tbody></table></figure>
+
+<ul>
+<li>此一例中，“工具” 为 “hexo” 的上一级。</li>
+</ul>
+<h4 id="（七）输入多个文章标签"><a href="#（七）输入多个文章标签" class="headerlink" title="（七）输入多个文章标签"></a>（七）输入多个文章标签</h4><p>   同上。</p>
+   <figure class="highlight subunit"><table><tbody><tr><td class="code"><pre><span class="line"><span class="keyword">tags:</span></span><br><span class="line">  - Testing</span><br><span class="line">  - Another Tag</span><br></pre></td></tr></tbody></table></figure>
+
+<ul>
+<li>标签还有第二种输入方式：</li>
+</ul>
+   <figure class="highlight subunit"><table><tbody><tr><td class="code"><pre><span class="line"><span class="keyword">tags:</span> [Testing, Another Tag]</span><br></pre></td></tr></tbody></table></figure>
+
+
+
+<h4 id="（八）实现高亮"><a href="#（八）实现高亮" class="headerlink" title="（八）实现高亮"></a>（八）实现高亮</h4><figure class="highlight xml"><table><tbody><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">span</span> <span class="attr">style</span>=<span class="string">"background-color:#FFF000"</span>&gt;</span>XXX<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>效果测试如下：</p>
+<ul>
+<li>我是文本中需要<span style="background-color:#00aa90">高亮的字体</span>。ヽ (* ^ｰ^) 人 (^ｰ^ *) ノ</li>
+</ul>
+<h4 id="（九）改变字体颜色"><a href="#（九）改变字体颜色" class="headerlink" title="（九）改变字体颜色"></a>（九）改变字体颜色</h4><figure class="highlight hsp"><table><tbody><tr><td class="code"><pre><span class="line">&lt;<span class="keyword">font</span> <span class="keyword">color</span>=<span class="string">"#FF0000"</span>&gt;XXX&lt;/<span class="keyword">font</span>&gt;</span><br></pre></td></tr></tbody></table></figure>
+
+<p>效果测试如下：</p>
+<ul>
+<li>我是文本中需要<span style="background-color:#00aa90"><font color="#FFFFFF">高亮的字体</font></span>。ヽ (* ^ｰ^) 人 (^ｰ^ *) ノ</li>
+</ul>
+<h2 id="八、插件总结"><a href="#八、插件总结" class="headerlink" title="八、插件总结"></a>八、插件总结</h2><h4 id="（一）一键部署"><a href="#（一）一键部署" class="headerlink" title="（一）一键部署"></a>（一）一键部署</h4><figure class="highlight ada"><table><tbody><tr><td class="code"><pre><span class="line">npm install hexo-deployer-git <span class="comment">--save</span></span><br></pre></td></tr></tbody></table></figure>
+
+<ul>
+<li><p>在根目录的站点配置文件 <code>_config.yml</code> 中，修改 <code>deploy</code> 项目：</p>
+ <figure class="highlight dts"><table><tbody><tr><td class="code"><pre><span class="line"><span class="meta"># Deployment</span></span><br><span class="line"></span><br><span class="line"><span class="meta">## Docs: https:<span class="comment">//hexo.io/docs/one-command-deployment</span></span></span><br><span class="line"><span class="symbol"></span></span><br><span class="line"><span class="symbol">deploy:</span></span><br><span class="line"><span class="symbol">  type:</span> git</span><br><span class="line"><span class="symbol">  repo:</span> git@github.com:用户名/用户名.github.io.git</span><br><span class="line"><span class="symbol">  branch:</span> main</span><br></pre></td></tr></tbody></table></figure></li>
+</ul>
+<h4 id="（二）站内搜索"><a href="#（二）站内搜索" class="headerlink" title="（二）站内搜索"></a>（二）站内搜索</h4><figure class="highlight ada"><table><tbody><tr><td class="code"><pre><span class="line">npm install hexo-generator-searchdb <span class="comment">--save</span></span><br></pre></td></tr></tbody></table></figure>
+
+<ul>
+<li><p>在 <code>next</code> <code>config.yml</code> 检索 <code>local_search</code> ，把 <code>enable</code> 改为 <code>true</code> ；</p>
+</li>
+<li><p>在根目录的站点配置文件 <code>_config.yml</code> 中加入搜索配置（extensions 下方）</p>
+ <figure class="highlight dts"><table><tbody><tr><td class="code"><pre><span class="line"><span class="symbol">search:</span></span><br><span class="line"><span class="symbol">  path:</span> search.xml</span><br><span class="line"><span class="symbol">  field:</span> post</span><br><span class="line"><span class="symbol">  format:</span> html</span><br><span class="line"><span class="symbol">  limit:</span> <span class="number">10000</span></span><br></pre></td></tr></tbody></table></figure></li>
+</ul>
+<h4 id="（三）RSS-订阅"><a href="#（三）RSS-订阅" class="headerlink" title="（三）RSS 订阅"></a>（三）RSS 订阅</h4><figure class="highlight ada"><table><tbody><tr><td class="code"><pre><span class="line">npm install hexo-generator-feed <span class="comment">--save</span></span><br></pre></td></tr></tbody></table></figure>
+
+<ul>
+<li><p>在根目录的站点配置文件 <code>_config.yml</code> 中，添加 <code>plugin</code> 项目于 <code>extensions</code> 下方：</p>
+ <figure class="highlight avrasm"><table><tbody><tr><td class="code"><pre><span class="line"><span class="symbol">plugins:</span> </span><br><span class="line">  hexo-generator-feed</span><br><span class="line"><span class="meta">#Feed Atom</span></span><br><span class="line"><span class="symbol">feed:</span></span><br><span class="line"><span class="symbol">type:</span> atom</span><br><span class="line"><span class="symbol">path:</span> atom.xml</span><br><span class="line"><span class="symbol">limit:</span> <span class="number">20</span></span><br></pre></td></tr></tbody></table></figure>
+</li>
+<li><p>在 <code>next</code> <code>config.yml</code> 检索 <code>Social Links</code> ，把 <code>RSS</code> 条目前的 <code>#</code> 去除 。</p>
+</li>
+</ul>
+<h4 id="（四）站点地图"><a href="#（四）站点地图" class="headerlink" title="（四）站点地图"></a>（四）站点地图</h4><figure class="highlight ada"><table><tbody><tr><td class="code"><pre><span class="line">npm install hexo-generator-sitemap <span class="comment">--save</span></span><br></pre></td></tr></tbody></table></figure>
+
+<ul>
+<li><p>在根目录的站点配置文件 <code>_config.yml</code> 中加入站点地图（extensions 下方）：</p>
+ <figure class="highlight dts"><table><tbody><tr><td class="code"><pre><span class="line"><span class="meta"># sitemap</span></span><br><span class="line"><span class="symbol">sitemap:</span></span><br><span class="line"><span class="symbol">  path:</span> sitemap.xml</span><br></pre></td></tr></tbody></table></figure></li>
+</ul>
+<h4 id="（五）文章推荐"><a href="#（五）文章推荐" class="headerlink" title="（五）文章推荐"></a>（五）文章推荐</h4><figure class="highlight ada"><table><tbody><tr><td class="code"><pre><span class="line">npm install hexo-related-popular-posts <span class="comment">--save</span></span><br></pre></td></tr></tbody></table></figure>
+
+<ul>
+<li><p>在 <code>next</code> <code>config.yml</code> 检索 <code>Related popular posts</code> ，把 <code>enable</code> 和 <code>display_in_home</code> 修改为 <code>true</code> ，在下一行加入以下配置：</p>
+ <figure class="highlight lasso"><table><tbody><tr><td class="code"><pre><span class="line">display_in_home: <span class="literal">true</span></span><br><span class="line"><span class="keyword">params</span>:</span><br><span class="line">  maxCount: <span class="number">5</span></span><br><span class="line">  #PPMixingRate: <span class="number">0.4</span></span><br><span class="line">  #isDate: <span class="literal">false</span></span><br><span class="line">  #isImage: <span class="literal">false</span></span><br><span class="line">  #isExcerpt: <span class="literal">false</span></span><br></pre></td></tr></tbody></table></figure></li>
+</ul>
+<h4 id="（六）文章置顶"><a href="#（六）文章置顶" class="headerlink" title="（六）文章置顶"></a>（六）文章置顶</h4><figure class="highlight fortran"><table><tbody><tr><td class="code"><pre><span class="line">npm uninstall hexo-generator-<span class="built_in">index</span> --<span class="keyword">save</span></span><br><span class="line">npm install hexo-generator-<span class="built_in">index</span>-pin-top --<span class="keyword">save</span></span><br></pre></td></tr></tbody></table></figure>
+
+<ol>
+<li><p>图标配置：打开 /themes/next/layout/_macro/ 目录下的 post.njk 文件，在以下代码的下方，插入再下显示的代码：</p>
+<figure class="highlight handlebars"><table><tbody><tr><td class="code"><pre><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"post-meta-container"</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">          </span><span class="template-variable">{{ <span class="name"><span class="built_in">partial</span></span>(<span class="name">'_partials/post/post-meta.njk'</span>) }}</span></span><br></pre></td></tr></tbody></table></figure>
+
+<figure class="highlight django"><table><tbody><tr><td class="code"><pre><span class="line"><span class="template-tag">{% <span class="name"><span class="name">if</span></span> post.top %}</span><span class="language-xml"></span></span><br><span class="line"><span class="language-xml">  <span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">"fa fa-thumb-tack"</span> <span class="attr">style</span>=<span class="string">"color: #00aa90"</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">  <span class="tag">&lt;<span class="name">font</span> <span class="attr">color</span>=<span class="string">00aa90</span>&gt;</span>Top<span class="tag">&lt;/<span class="name">font</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">  <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"post-meta-divider"</span>&gt;</span>|<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"></span><span class="template-tag">{% <span class="name"><span class="name">endif</span></span> %}</span></span><br></pre></td></tr></tbody></table></figure>
+</li>
+<li><p><code>Top</code> 文字和图标两者的颜色，可以使用自己喜欢的颜色 Hex Code。</p>
+</li>
+<li><p>于要置顶的文章文档首部资料加上一行 <code>top: true</code> ；</p>
+</li>
+<li><p>如果文章 &gt;1，可设置 top 的值（大的在前面）以控制顺序，即在 <code>top: true</code> 下一行加上 <code>top: 1</code> 或 <code>top: 10</code> 等 —— 数值越大的文章，会排在越靠前的位置。</p>
+</li>
+</ol>
+<h4 id="（七）Live2D"><a href="#（七）Live2D" class="headerlink" title="（七）Live2D"></a>（七）Live2D</h4><ol>
+<li><p>安装配置</p>
+<figure class="highlight ada"><table><tbody><tr><td class="code"><pre><span class="line">npm install <span class="comment">--save hexo-helper-live2d</span></span><br></pre></td></tr></tbody></table></figure>
+</li>
+<li><p>选择模型</p>
+<figure class="highlight autohotkey"><table><tbody><tr><td class="code"><pre><span class="line">npm install live2d-widget-model-模型名（我用的是 `wanko` ）</span><br></pre></td></tr></tbody></table></figure>
+</li>
+<li><p>在根目录的站点配置文件 <code>_config.yml</code> 中，添加 <code>live2d</code> 项目于 <code>extensions</code> 下方：</p>
+<figure class="highlight yaml"><table><tbody><tr><td class="code"><pre><span class="line"><span class="attr">live2d:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">scriptFrom:</span> <span class="string">local</span></span><br><span class="line">  <span class="attr">pluginRootPath:</span> <span class="string">live2dw/</span></span><br><span class="line">  <span class="attr">pluginJsPath:</span> <span class="string">lib/</span></span><br><span class="line">  <span class="attr">pluginModelPath:</span> <span class="string">assets/</span></span><br><span class="line">  <span class="attr">tagMode:</span> <span class="literal">false</span></span><br><span class="line">  <span class="attr">debug:</span> <span class="literal">false</span></span><br><span class="line">  <span class="attr">model:</span></span><br><span class="line">    <span class="attr">use:</span> <span class="string">live2d-widget-model-wanko</span></span><br><span class="line">  <span class="attr">display:</span></span><br><span class="line">    <span class="attr">position:</span> <span class="string">left</span></span><br><span class="line">    <span class="attr">width:</span> <span class="number">145</span></span><br><span class="line">    <span class="attr">height:</span> <span class="number">150</span></span><br><span class="line">  <span class="attr">mobile:</span></span><br><span class="line">    <span class="attr">show:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">react:</span></span><br><span class="line">    <span class="attr">opacity:</span> <span class="number">0.7</span></span><br></pre></td></tr></tbody></table></figure></li>
+</ol>
+<h2 id="九、踩坑记录"><a href="#九、踩坑记录" class="headerlink" title="九、踩坑记录"></a>九、踩坑记录</h2><ol>
+<li>如果误删根目录 &gt; public &gt; <code>index.html</code> ，本地及远程仓库都没了这个文件，网站无法显示，变成 <code>404</code> ，且无法使用指令退回前面版本时，笨方法是，把旧版本的 <code>index.html</code> 内容复制了，在远程仓库和本地 <code>public</code> 文件夹都重建一个同名文件，并把所复制的内容贴回去，然后重新生成部署 —— 不能只在其中一个地方，即本地或远程仓库重建该文件，因为重新部署后，两边会同步，从而把刚刚补上的 <code>index.html</code> 再次删除掉，徒劳无功。</li>
+</ol>
+<h3 id="Resources："><a href="#Resources：" class="headerlink" title="Resources："></a>Resources：</h3><ol>
+<li><a href="https://blog.csdn.net/yaorongke/article/details/119089190">GitHub Pages + Hexo 搭建个人博客网站，史上最全教程</a></li>
+<li><a href="https://codeantenna.com/a/YxMbXzXhGj">Hexo 博客在换了电脑或者重装系统后如何在新电脑恢复</a></li>
+<li><a href="https://theme-next.js.org/">官方文档</a></li>
+<li><a href="https://gagalab.tech/2021/07/14/Next%E4%B8%BB%E9%A2%98%E4%BD%BF%E7%94%A8Github%E8%B4%A1%E7%8C%AE%E6%97%A5%E5%8E%86%E6%95%99%E7%A8%8B/">手把手教你在 Hexo 中使用 Github 贡献日历（以 Next 主题为例）</a></li>
+<li><a href="https://blog.csdn.net/TheSeasonSun/article/details/124828915">hexo nexT7.8.0 博客显示图片（非图床方法）</a></li>
+<li><a href="https://theriseofdavid.github.io/2020/10/10/blog/hexo-insert-movie/">QUESTION:　如何在 Hexo or Markdown 插入 youtube 影片呢？</a></li>
+<li><a href="https://kevin0048.github.io/2020/04/17/%E5%9F%BA%E4%BA%8Ehexo%E3%80%81next%E4%B8%BB%E9%A2%98%E5%92%8Cgithub%E7%9A%84%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/">基于 hexo、next 主题和 github 的个人博客搭建</a></li>
+<li><a href="https://blog.csdn.net/as480133937/article/details/100138838">Hexo-Next 主题博客个性化配置超详细，超全面 (两万字)</a></li>
+<li><a href="https://www.yousazoe.top/archives/c12c9c40.html">Hexo-NexT 博客使用插件总结</a></li>
+<li><a href="https://www.jianshu.com/p/53670692c5a6">基于 Hexo+Next 的主题优化总结 &amp; 踩过的坑</a></li>
+<li><a href="https://blog.balabambe.com/2021/07/31/Hexo-%E6%96%B0%E5%A2%9E-Disqus-%E7%95%99%E8%A8%80%E6%9D%BF%E5%8A%9F%E8%83%BD/">Hexo 新增 Disqus 留言板功能</a></li>
+</ol>
+<h3 id="Changelog："><a href="#Changelog：" class="headerlink" title="Changelog："></a>Changelog：</h3><ul>
+<li><p>2022-11-15 </p>
+<ul>
+<li><p>简完善 ## 六 ####（十二）~（十四）节；</p>
+</li>
+<li><p>新增第（十九）节；</p>
+</li>
+<li><p>新增 ## 七 ####（五）~（六）节。</p>
+</li>
+</ul>
+</li>
+<li><p>2022-11-14 简创建，完成初稿。</p>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>笔记</tag>
+        <tag>教程</tag>
+        <tag>记录</tag>
+        <tag>部落格</tag>
+        <tag>工具</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>作者，你该认清 “故事” 是什么样的存在</title>
+    <url>/%E4%BD%9C%E8%80%85%EF%BC%8C%E4%BD%A0%E8%AF%A5%E8%AE%A4%E6%B8%85%E2%80%9C%E6%95%85%E4%BA%8B%E2%80%9D%E6%98%AF%E4%BB%80%E4%B9%88%E6%A0%B7%E7%9A%84%E5%AD%98%E5%9C%A8/</url>
+    <content><![CDATA[<p><img src="https://upload-images.jianshu.io/upload_images/2514299-9661aa8be7e8b812.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="创作者的日常心酸"></p>
+<h2 id="从零开始的写作修炼术１｜作者，你该认清“故事”是什么样的存在"><a href="#从零开始的写作修炼术１｜作者，你该认清“故事”是什么样的存在" class="headerlink" title="从零开始的写作修炼术１｜作者，你该认清“故事”是什么样的存在"></a>从零开始的写作修炼术１｜作者，你该认清 “故事” 是什么样的存在</h2><p>文／简书爱</p>
+<blockquote>
+<p>  “滴滴答答滴答滴答 ——”<br>  月影高挂，夜深无人，在电脑面前不停码字，容颜憔悴，却只得一杯咖啡作伴。<br>  左思右盼，把发表的作品点开又点开，只期待收到有人阅读的音讯或是评论的通知，无奈…… 失望了一次又一次。<br>  到底为什么呢？写得不好吗？哪里写坏了呢？ …… 难道，我真的没有写小说的才华……？</p>
+</blockquote>
+<p>作者，你是否曾经经历过类似的情境？这当中，又有你做少的影子？</p>
+<p>想要有读者，要先知道，<strong>什么样的故事会有人看</strong>。读者，到底想要什么呢？为什么有些人的文字就是能够吸引那么多关注？如果，我知道你想吃车站前那家蛋糕店的酒酿桂圆蛋糕，立即把它送到你面前，想必你会很快乐。不过，要是我送给你的，是印上邻镇阿牛照片的造型蛋糕的话…… 嘿嘿嘿……</p>
+<p>不管怎樣，要回答这些问题，你首先应该知道，<strong>“故事是什么？”</strong></p>
+<span id="more"></span>
+
+
+
+<h2 id="1"><a href="#1" class="headerlink" title="1"></a>1</h2><blockquote>
+<p>说的人告诉听的人，某人因为想要什么而做了什么，又为什么要这么做。 —— 约翰・特鲁比（John Truby）《故事写作大师班》</p>
+</blockquote>
+<p>故事，是作者把某个资讯传播给读者的过程。</p>
+<p>传递资讯的方式有很多种，“故事” 只是其中之一。对于要说好一个故事来说，我们要下功夫的重点，便在于 “传递的讯息” 是什么？</p>
+<h4 id="故事传递什么内容？"><a href="#故事传递什么内容？" class="headerlink" title="故事传递什么内容？"></a>故事传递什么内容？</h4><p>《超棒小说这样写》认为，有意思的人物，经历一连串有因果关联的事件，产生了改变。这整个过程的叙述，就是故事。</p>
+<p>事实上，好的故事却不只有这么简单。正如《大小说家如何唬你》里面提到的：</p>
+<blockquote>
+<p>与作家相较，行销人员、政治人物、以及电视上的福音传道人更懂故事…… 因为这些人的工作内容本来就起始于作家们通常不会去想的东西：他们的故事想要传达什么样的讯息。以此认知为基础，他们编造的故事就会以每一句话、每一个意象、以及每一个细节来直接传达讯息。</p>
+</blockquote>
+<p>没错，故事的内容，像圣诞树下，那形形色色装着礼物的盒子。精致美丽的外表是一个模样，里面却又是另个样貌。只有将礼物盒子拆开来，你才会发现，里面藏着的，是什么样的东西。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/2514299-9aa3f6333413da91.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="圣诞礼物内的乾坤"></p>
+<p>故事在表面上看起来，是 “<strong>一个有意思的人物，为了达成目标，经历了一连串有因果关联的事件，而在最后产生改变。</strong>”</p>
+<p>背面上，这个 “有意思的人物”，就是我们的<strong>主角</strong>；他要达成的 “目标”，就是回答<strong>故事的问题</strong>；“一连串有因果关联的事件” 指的是<strong>冲突</strong>；“最后产生的改变” 则是<strong>故事本身真正的重点</strong> —— 作者想要告诉读者的讯息，即他自身对于故事问题所作出的答案。</p>
+<p>许多人认为，想要写出一个成功的故事，就必须学会把文字写得漂亮一些。优美诗意的句子、华丽的修辞和出彩的词汇…… 但事实往往与直觉相反，精彩的故事可能比优秀的文笔更重要。</p>
+<p><strong>故事成功的决定性因素，与写作没有多少关系。</strong>因为，故事可以透过文字、图像、动态影像、声音等不同的媒介来表达，文字不过其中之一。因此，如果你的确 “懂得说故事”，就算文字差一些，杀伤力会远比你所想象的还小。</p>
+<p>我想，《大小说家如何唬你》这本书对于 “把文字写得漂亮一些” 的定义做了很好地诠释：能够用华丽的语言与鲜明的意象来写故事，让对话听起来像是真的，暗喻充满洞见，角色有趣无比，而且持续用许多栩栩如生的感官印象来点缀故事。</p>
+<p>但要记住，这些都只是点缀而已，是次要的。毕竟，如果读者没兴趣知道接下来会发生什么事，文字写的再漂亮也没有用。一本精雕细琢，却没有故事性的小说，品尝起来，不就跟一大碗蜡做的水果没什么两样吗？</p>
+<h2 id="2"><a href="#2" class="headerlink" title="2"></a>2</h2><p>我想，没有人会否认，故事的作用在于 “娱乐性”。</p>
+<p>虽然小说有很多不同流派，还有 “文学小说” 和 “大众小说” 之分，但不管故事传达了什么讯息：真实或离奇、浅显或深刻，对于读者来说，他们更想从书里得到的，是娱乐效果 —— 没有人会因为想要知道某个资讯而拿起一本小说。</p>
+<blockquote>
+<p>狄佛托（Bernard DeVoto）在《小说世界》（The World of Fiction）中说，人看书是为了 “乐趣。…… 除了专业与半专业人士之外，没有人会为了其他理由看小说。” —— 詹姆斯・N・弗雷 （James N. Frey）《超棒小说再进化》</p>
+</blockquote>
+<h4 id="所以，是怎么撑起了故事的娱乐性质？"><a href="#所以，是怎么撑起了故事的娱乐性质？" class="headerlink" title="所以，是怎么撑起了故事的娱乐性质？"></a>所以，是怎么撑起了故事的娱乐性质？</h4><p>或者，我们该问问自己，一个以娱乐目的作为己任的故事，应该具有什么样的特质？</p>
+<p>不卖关子，答案，便在于两个关键词 —— <strong>同理心</strong>和<strong>好奇心</strong>。</p>
+<p>对于故事为什么精彩，很多书本都会告诉我们 —— 情节。情节是什么样的存在？它主要的组成成分是，有冲突和悬念的事件。</p>
+<p>不对啊！那我们是不是可以理解为，故事就是一直制造冲突？哦漏漏漏，千万别误会，故事不是事件的总和，更不是单纯不停制造冲突就行得通的，否则我把邻村阿牛的倒霉事串连起来，编成一本《一千零一夜》，估计你还没读到第 100 个事件，早就呼呼大睡了。</p>
+<p>这个道理很简单，问问你为什么会追看自家爱豆的消息，而不看看地球另一端的当红大明星出轨的新闻就成了。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/2514299-310ba9c26bebb028.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="请容许我私心放两只我家爱豆"></p>
+<p>人类对自己很敏感，对和自己相关的事情敏感。虽然八卦，可我们几乎不会好奇一个自己压根不认识的艺人发生了什么事，除非你对这个名字有印象。即是说，如果没有跟自己产生某种联系，我们不会产生好奇心，注意力不会被吸引，正如你没有脱发问题时，地中海修复的广告在你面前形同虚设。因为，大脑天生就对自己感兴趣。</p>
+<p>回到同理心和好奇心上。</p>
+<p>我们现在明白，要让读者对故事感兴趣，在于建立他与故事之间的联系。故事如何与读者产生联系？ 《超棒小说再进化》解释为，作者必须要带领读者进入另一个时空。是的，只有当读者走近小说的世界里，故事的一切对他才有意义。</p>
+<p>针对这点，该书提出其中一个方法：具体地、仔细地描写可带动感官的细节。</p>
+<blockquote>
+<p>就如贾德纳在《小说的艺术》中说的：“生动的细节是小说的生命之血……。透过细密观察所做的细节描述，会持续提供读者凭据……。具体的细节，把我们带进故事里，让我们信以为真。”<br>……<br>…… 当作者 “展现” 给读者看时，他是在提供感官知觉的细节，借此把读者带入虚构的梦境。<br>相反的，用 “叙述” 的方式会把读者推出虚构之梦，因为这种方式会让读者有意识地去分析叙述的内容，读者于是清醒了过来。在这种情况下，读者是去思考，而不是去体验。</p>
+</blockquote>
+<p>我认为，还有一个更有效的方法，那就是创造读者与主角之间的联系。在这方面，“同理心” 是一个致胜必杀技。无论是 “让读者对你笔下的人物产生同情” 或者是让他们 “认同书中人” 都行，但后者更通用些。</p>
+<p>同理心是比同情心强烈得多的情绪，产生了同理心之后，读者会跟角色拥有相同的感觉。这都要感谢我们大脑中的镜像神经元。同情、认同和同理心，让读者与角色之间产生了情绪连结，至此，他便开始在意故事世界发生的事。这时候，你需要让读者完全融入故事，并进入忘我的状态，而秘诀，就在于 “内心挣扎”。其重点是，让读者参与角色做决定的过程，让他们完全沉浸在小说情境中，甚至成为主角，感觉到他所感觉的一切，想要的、害怕的也都跟他一样。</p>
+<h2 id="3"><a href="#3" class="headerlink" title="3"></a>3</h2><p>说完同理心，是时候来谈谈好奇心。</p>
+<p>所有好的故事都应该引发读者内心那种美好的急迫感。而这美妙的感觉，都是因为多巴胺在作祟！</p>
+<blockquote>
+<p>根据神经科学的研究指出，我们之所以能投入故事情境、久久不能自己，是因为大脑的神经元能分泌出多巴胺，告诉我们大脑即将接收到一些刺激的讯息。 —— 丽萨・克龙（Lisa Cron）《大小说家如何唬你》</p>
+</blockquote>
+<p>专事神经科学的作家乔纳・雷勒（Jonah Lehrer）说，最能抓住人心的，莫过于惊奇的东西。也就是说，每当我们拿起一本书，我们总是期盼能看到很特别的事情。我们总是渴望见证某人人生中的关键时刻，而且就刚好在那当下。</p>
+<p>不过，我还是想要强调 “联系” 的重要性。 《大小说家》也提到，“如果想让故事抓住人心，不止要写出正在发生的事情，还要让读者能预期后续发展”。我猜，没有什么比跟读者的感觉产生了联系的主角更能引起读者持续的好奇心了。</p>
+<p>如果读者跟主角产生联系，用他的视角来观察故事里发生的事情，便等于用他的双眼来看待整个世界。这意味着，读者评断故事中所有人、事、物的方式，都取决于它们对主角有何意义，尤其是当读者知道<strong>主角的目标</strong>时。</p>
+<p>在这种情况下，读者时时在心中盘旋着这些疑问：“主角能达成他的目标吗？在过程中他需要付出什么代价？最后这将会如何改变他？” 一旦读者们被激发出好奇心，一股 “想要知道接下来发生什么事” 的强烈欲望（情绪）就会油然而生。在多巴胺的作用下，读者便只能往下翻页、不停地往下翻页 ——</p>
+<p>……</p>
+<blockquote>
+<p>我们最关注的，不过是别人内心的挣扎。我们渴望看见别人内心挣扎。</p>
+</blockquote>
+<p>其实，深入了解后，我们可以得知，激发读者好奇心的，并不完全是冲突本身，反而是 <strong>“主角要遇到这事该怎么办、他会有什么反应？”</strong> 由于主角和主角的目标让读者<strong>能预期后续发展</strong> —— 深知这些冲突会对他有不妙的影响，因此替他焦虑不已。 <strong>冲突折磨了主角，而主角将遭受到的折磨却折磨了读者，这才是所谓的悬念</strong> —— 情节的<strong>冲突</strong>与<strong>悬念</strong>有意义的原因。</p>
+<p>由此可知，好奇心，是读者被故事吸引，深陷其中无法自拔的关键，而读者的 “同理心” 在故事中对其 “好奇心” 有着不小的影响。此外，“主角的目标” 在两者之中具有极高的重要性。不过，这篇文太长了，我们下次再谈。</p>
+<p>总而言之，我们学到了，<strong>必须尽快让读者和主角碰面，最好第一段就能遇见他。</strong></p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><blockquote>
+<p>对于一个小说作者来说，故事是一场论证的旅程。</p>
+</blockquote>
+<p>普莱斯（WT Price）在 1908 年的《剧本架构与戏剧原则之分析》（The Analysis of Play Construction and Dramatic Principle）中提出，<strong>故事写作的基底是 “命题”</strong>，是一个 “简短、合理的声明或推论，要用整个戏剧的全部动作来说明。”</p>
+<p>我将这个 “命题”，理解为 <strong>“假设”</strong>，而我们在故事中发展的情节，则是为了 <strong>“验证这个假设为真”</strong>。</p>
+<p>小说作者，请记住，你的目标，除了证明自己在故事中的假设，就是把读者带进 <strong>“绝对状态”</strong>。</p>
+<p>这是催眠术里的词汇。当催眠师完全掌控，让催眠对象进入 “绝对状态” 时，他要他学鸭叫，那人就马上呱呱呱。小说作者的任务，就是把读者吸引进绝对状态，让他们<strong>像是真的活在小说世界里，真实世界反而消失无踪。在这里，读者一会儿哭，一会儿笑，感受著书中人物的痛苦，满脑子书中人的想法，并且参与他的决定。</strong></p>
+<p>正如《超棒小说再进化》说的，进入这种状态的读者，会深陷其中，你想要引他分神，往往必须摇晃他，才能引起他的注意。 “嘿，查理！把书放下！吃晚饭了！喂！你聋了吗？”</p>
+<p><strong>身为读者，我们永远愿意像睡美人被纺锤吸引那般，即便有 “危险”，仍义无反顾地奔向这场让人着迷的，“虚构的梦境”。这也正是故事的美丽之处。</strong></p>
+<h2 id="参考文献："><a href="#参考文献：" class="headerlink" title="参考文献："></a>参考文献：</h2><ul>
+<li><p>丽萨・克龙（Lisa Cron） ，<strong>《大小说家如何唬你》</strong>（Wired for Story，簡體版譯名《你能寫出好故事》）。</p>
+</li>
+<li><p>詹姆斯・N・弗雷 （James N. Frey），<strong>《超棒小说这样写》</strong>（How to Write a Damn Good Novel，簡體版譯名《劲爆小说秘境游走》）。</p>
+</li>
+<li><p>詹姆斯・N・弗雷 （James N. Frey），<strong>《超棒小说再进化》</strong>（How to Write a Damn Good Novel, II，簡體版譯名《让劲爆小说飞起来》）。</p>
+</li>
+<li><p>罗伯特・麦基 （Robert McKee），<strong>《故事的解剖》</strong>（Story，簡體版譯名《故事》）。</p>
+</li>
+<li><p>约翰。特鲁比（John Truby），<strong>《故事写作大师班》</strong>（The Anatomy of Story）。</p>
+</li>
+</ul>
+<h2 id="Changelog："><a href="#Changelog：" class="headerlink" title="Changelog："></a>Changelog：</h2><ul>
+<li>2018-09-24 完成初稿，首发于简书。</li>
+<li>2018-09-26 修增参考文献的简体版译名。</li>
+<li>2018-10-06 添加引用书籍的作者姓名。</li>
+<li>2018-10-11 发表于新建的 GitHub Blog。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>从零开始的写作修炼术</category>
+      </categories>
+      <tags>
+        <tag>写作</tag>
+        <tag>故事</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>总要有些契机，我们才有找回初衷的勇气</title>
+    <url>/%E6%80%BB%E8%A6%81%E6%9C%89%E4%BA%9B%E5%A5%91%E6%9C%BA%EF%BC%8C%E6%88%91%E4%BB%AC%E6%89%8D%E6%9C%89%E6%89%BE%E5%9B%9E%E5%88%9D%E8%A1%B7%E7%9A%84%E5%8B%87%E6%B0%94/</url>
+    <content><![CDATA[<p><img src="https://upload-images.jianshu.io/upload_images/2514299-adcd9bb7cd92234c.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="小王子"></p>
+<h2 id="读书分享与心得３｜《小王子》：总要有些契机，我们才有找回初衷的勇气"><a href="#读书分享与心得３｜《小王子》：总要有些契机，我们才有找回初衷的勇气" class="headerlink" title="读书分享与心得３｜《小王子》：总要有些契机，我们才有找回初衷的勇气"></a>读书分享与心得３｜《小王子》：总要有些契机，我们才有找回初衷的勇气</h2><p>文／简书爱</p>
+<blockquote>
+<p>「可是，很遗憾，我却不能透过盒子看见小羊。我大概有点和大人们差不多。我一定是变老了。 」——《小王子》</p>
+</blockquote>
+<h4 id="被遗忘的蛇吞象"><a href="#被遗忘的蛇吞象" class="headerlink" title="被遗忘的蛇吞象"></a>被遗忘的蛇吞象</h4><p>书中的主角，是以第一视角的方式叙事，没有名字。先不论这个人物含有多少作者本身的缩影，但是，我相信这个角色，有着我们大部分人的影子。</p>
+<p>主角小时候，第一个喜欢上的爱好，是画画。可惜，由于画了一幅大人们不喜欢的帽子 —— 蛇吞象的画，而被打发去学习，从此，主角放弃了这个美好的爱好。长大后，主角对于那些只看得见「 帽子 」的人，就跟他们谈论桥牌、高尔夫球、政治、领带等等，人们也乐于赞美他的通情达理。</p>
+<p>主角终究跟我们大多数人一样，在渐渐长大的过程中，一点一点地失去自我，像掌心的流沙一般，从指尖逝去，我们却仍旧以为自己还握住些什么；也似沙漏，终究抵不住时间的耍赖。为了在人群中的生存，他迎合别人。我们，亦迎合别人。</p>
+<span id="more"></span>
+
+<p>长大后，主角早已经忘记了原来的自己。像他自己说地，可能他变老了。主角遗忘了如何用心眼看待世界 —— 直到遇到了小王子。</p>
+<p>比如，当小王子对他提起他的花的刺时，他对着该死的螺丝恼火地说： 「 刺么，什么用都没有，这纯粹是花的恶劣表现。 」</p>
+<p>面对小王子的质问，他回答： 「 算了吧，算了吧！我什么也不认为！我是随便回答你的。我可有正经事要做。 」</p>
+<p>「 正经事？ 」 小王子说，他说话就和那些大人一样。</p>
+<p>又比如，他对大谈狐狸朋友的小王子说： 「 啊！，你回忆的这些故事真美。可是，我还没有修好我的飞机。我没有喝的了，假如我能优哉游哉地走到水泉边去，我一定也会很高兴的！ 」</p>
+<p>岁月对人残忍，一切过去，都不可能回去。世上没有 「 如果 」 ，纵使有人抱着饮砒霜的决心，也求之不得。</p>
+<h4 id="盒子里的羊"><a href="#盒子里的羊" class="headerlink" title="盒子里的羊"></a>盒子里的羊</h4><p>「 我不要，这只羊已经病得很重了。给我重新画一只。 」</p>
+<p>「 你看，你画的不是小羊，是头公羊，还有犄角呢。 」</p>
+<p>「 这一只太老了。我想要一只能活得长的羊。 」</p>
+<p>小王子拒绝了三次，最后却接受了一个箱子。</p>
+<p>「 这正是我想要的。 」 他说。</p>
+<p>他看得见画中箱子里面的羊 —— 即使那是肉眼所看不见的。</p>
+<p>瞬间，那个小时候画着一顶 「 帽子 」 ，开心地说那是 「 蛇吞象 」 的，主角的身影，与小王子重叠了。</p>
+<p>那些眼睛看不见，需要用心眼看到的事物，只有小孩子那双澄澈的眸子，才能看见。</p>
+<h4 id="找回初衷的他与因领悟而成长的他"><a href="#找回初衷的他与因领悟而成长的他" class="headerlink" title="找回初衷的他与因领悟而成长的他"></a>找回初衷的他与因领悟而成长的他</h4><p>《小王子》是一个很有意思的故事。在书中可见的结局中，主角因为小王子的启发，找回了曾经能看见的、藏着找不着的宝藏的，神秘房子的美，以及理解为什么自己喜欢沙漠 —— 因为在不知名的某处藏着一口不为人知的井水。他依然见不着箱子里的羊，但是，从今以后，星星哭泣还是欢笑，都逃不出他的「 眼睛 」。</p>
+<p>而小王子，则是在被狐狸提示之后，领悟到，真正重要的东西，眼睛是看不见的。有些事物是我们的唯一，再多的更甚者，亦无法取而代之。因为，花费时间付出后，才让它变得如此重要。</p>
+<p>在这个故事中，我们看到一个已经习惯迎合别人、在思想上变老的大人，重新发现自己心智中住着年轻的孩子；而一个思绪纯真、没有杂质的小孩，则在旅行经历成长，了解到从前不明白的道理。</p>
+<p>「我当时太年轻，还不懂得爱她。」他说。</p>
+<p>他们两人，一个回到过去的稚气，一个迈向前方成长，一进一出，一前一后，相互推动、循环，似古老的阴阳太极一般。</p>
+<p>我们无法永远不长大，当一名「小王子」。然而，如果每个人只能长成一个无趣的大人，那活着又有什么意思呢？我们踏上的列车，该要通往何方？</p>
+<p>中国先人有过「中庸」的智慧，小王子与大人，我们如果不能够二取一，何不贪心一些，糅合两者优势，既让心里，住着小孩，又住着大人，对应其不同的场合出现呢？</p>
+<p>应对不同的场合，运用不同的、相应的方法对待，这原来是我们生为人的「智慧」。正如每一本不一样的书，我们不应该用同样的方法和速度来阅读；不同的咖啡豆，冲泡的手法也大有差异，这人世间，原本没有一套使用手册，万用于所有情况。</p>
+<p><strong>总要有些契机，我们才有找回初衷的勇气。</strong>书中的主角的契机是金发、天真无邪又敏感脆弱的小王子，你我的契机，又是什么、现在在哪里呢？</p>
+<p>愿你早日寻回自己的初衷。</p>
+<h2 id="Changelog："><a href="#Changelog：" class="headerlink" title="Changelog："></a>Changelog：</h2><ul>
+<li>2018-02-12 完成初稿，首发于 Blogger。</li>
+<li>2018-09-23 修改细部标点符号和文字，发表于简书。</li>
+<li>2018-10-14 发表於 GitHub Blog。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>阅读心得</category>
+      </categories>
+      <tags>
+        <tag>法国文学</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>再见，再见！开智学堂信息分析课程三期结业复盘</title>
+    <url>/Review-of-Information-Analysis-3/</url>
+    <content><![CDATA[<blockquote>
+<p>记忆外部化会催生记忆外部化。如对写作的写作会催生写作；对学习的学习会催生新的学习需求。愿你同我一样幸运。</p>
+</blockquote>
+<h2 id="背景：是结束也是一个新的开始"><a href="#背景：是结束也是一个新的开始" class="headerlink" title="背景：是结束也是一个新的开始"></a>背景：是结束也是一个新的开始</h2><p>2018 年的最后一个月，我走到人生的一个最低谷 —— 迷失在人间，一条无人能够替我走的道路上。</p>
+<p>回想发现，我是一个极其懒惰的人，从小是一个听话、乖巧且循规蹈矩的孩子。我永远在别人看得见的地方按照规则走，只有在一个人独处时，才能抛开所有别人的要求、眼光、规矩和习惯，自自在在地做自己，以至于产生两个严重的结果：一、我越来越孤僻，只喜欢一个人呆着，也害怕处于一个有我以外的人的空间；二、结果长期耍自闭、只在自己习惯的领域玩耍，导致没有真正养成一些身为人该有的好习惯（相反的，累积了数之不尽的坏习惯，如超爱看电视，连续剧、动漫小说等，不能自拔，20 年的时光都耗在上面了……）</p>
+<p>也许，我这么做，只是因为害怕麻烦，想要避开任何引人不快、耗费精力的事物而已吧？</p>
+<span id="more"></span>
+
+<p>在学习上，我也贯彻了一如既往的作风 —— 从来不费心思去学习困难、麻烦的事，不懂的地方未曾想过要去动手查询，补充知识，只一味地把要考试的内容背起来就去考，想复印机一样，还为了结果不错沾沾自喜，抱持僵化型思维、完美主义的心态，成为了愚蠢的学习者而不自知。这导致我在任何学习上都停留在入门的平台期，怎么学习和练习都上不去。我也没有继续深入，而是到处寻找新的刺激。</p>
+<p>我想，这也是一种懒惰的表现吧？</p>
+<p>糟心的是，这种做法让我人生的前二十几年顺风顺水，看着也挺不错的，生活和学习上没有经历过太多的低谷及考验。</p>
+<p>最大的矛盾，在我 18~25 岁期间才缓缓爆发。不用掐指一算，都明显看见这几个大矛盾是发生在校园生活和走出社会的交接口。</p>
+<p>2018 年下半年，是少年在大学毕业后一段充斥希望和绝望的漂流，然而，这段旅程一点也不奇幻。徘徊在 “坚持自己的梦想，但却无能为力、被现实的困境啃噬” 及 “放弃自己的梦想，被现实淹没，随波逐流、庸庸碌碌度过一生” 两个选项，并且，在努力输出作品、与自己个性和习惯上的缺失作战、与现实生活的压力作战等三方面摆荡，心力交瘁。</p>
+<p>如果不写作，我想做什么呢？我发现自己最感兴趣的，是线上教育。</p>
+<p>远远地望着自己追了两年的开智，那么远，那么近，看起来十分美好。如流星瞬间划过黑夜的天际，心中顷刻间闪过一朵梦想的火花 —— 如果有机会到开智去，哪怕只是短暂的实习，该有多好？照着头像插图画了偶像（阳老师）的画像，写下这一个不切实际的梦，贴在书桌前的墙上，天天仰望着。</p>
+<p>望一两个星期之后，忽然萌生一个改变人生的念头 —— 自己对线上教育行业这么感兴趣，怎么可以没有参加过偶像亲自指导的线上课程呢？于是，那一秒，就完成决定。</p>
+<p>带着激动又兴奋的心情，我就这样来到开智这个学习 “场”，信息分析三期。</p>
+<p>一眨眼，七周课程就这样结束。在写这篇复盘时，心情很沉重，这份沉重包含了诸多遗憾与不舍；隐隐中，又带了一丝对未知的期待和兴奋，只因我相信，未来会因开智变得更好。</p>
+<p>信息分析课程第三期，就这样结束了。对我而言，这却是一个新的开始。至少，我回顾发现，几个月前的自己似乎纠结于一个 “非黑即白” 的假象，逼着自己非在二选一的难题里作出抉择。参加课程之后，我为自己找到第三条路，这条路只因开智涌现 —— 即便并非从事自己想要做的工作，领域相关就行，然后利用工作环境这一个 “场”，学习内隐知识、持续创造自己在该领域的作品、成果，不断迭代，总有一天，这些堆叠起来的作品，便会化成通往梦想的道路。</p>
+<p>开智，我们的缘分会一直持续下去……</p>
+<h2 id="复盘：没有人能替你走过任何一个难关"><a href="#复盘：没有人能替你走过任何一个难关" class="headerlink" title="复盘：没有人能替你走过任何一个难关"></a>复盘：没有人能替你走过任何一个难关</h2><h4 id="课程和作业回顾"><a href="#课程和作业回顾" class="headerlink" title="课程和作业回顾"></a>课程和作业回顾</h4><ul>
+<li>Ch 1<ul>
+<li> 第一周理所当然地跟打了鸡血一样，充满动力和精力，兴奋异常。缺点是对于一个新进入的领域没有权重意识，对每个知识点、每个细节都投入了一样的注意力和精力，导致真正重要的地方没能有效花费时间去提升。实际上这个缺陷全程都持续，所以后面三周就不重复提了。</li>
+<li>理论部分理解得快，但实作部分天差地远。可见自己一直都特别不擅长把学到的东西过渡到实作部分。后面三周也有相同情况，不重复提。</li>
+</ul>
+</li>
+<li>Ch 2<ul>
+<li> 这是我在信分三大领域中最感兴趣的一个领域，因为自己对不少学科都非常感兴趣。跟康锋、榆贝、大蔚和舟舟队长等同学组成一个讨论群讨论。可惜自己贡献不大。后来，比起预期的完成两份进阶作业，只做完了进阶作业 1，而且自己觉得不理想。不过，尽管还是有小小遗憾，初次尝试，已经可以算是合格。没学会如何使用 CiteSpace。</li>
+<li>最有成就感的地方是看完了 100 篇文献的摘要。但实际上作用不大。希望日后可以持续练习，相比会越来越知道怎样从中抓到关键信息的感觉，也能够训练自己的权重意识。谢谢阳老师对这个问题的指导，让我更能抓到行动的关键。</li>
+</ul>
+</li>
+<li>Ch 3<ul>
+<li> 没有做进阶作业。基础作业也做得不理想。是整个课程里最弱的部分。也许复训时可以针对这点加强。或是等实际需要用到时，再好好学一遍。（可以刻意为自己创造一个需要用到的时机，写进阶作业就是其中一个这样的机会）</li>
+<li>这一个坑及生活中的茫然、压力让自己的激情消减，陷入课程时期的第一个也是最大的低谷。</li>
+</ul>
+</li>
+<li>Ch 4<ul>
+<li> 成功激励自己返回课程，当然也要感谢课程内容，因为相当于对一个极度口渴的人提供一口井，马上又燃烧起火焰～</li>
+<li>试图完成两个进阶作业，碍于必须尽快进入 BP，没能达成。完成度还算满意，希望能够有机会真正完成。</li>
+<li>这周作业最大的收获是让自己更加了解自己，焦虑的内心平静下来。我把重点放在探索过去的自我了（为了更加了解自己），但更重要的部分、也是自己更感兴趣的部分，实际上是 “可能的自我”，希望日后能够在这点持续迭代、探索，并写下来，为自己创造更多的机会。</li>
+<li>这周的结果就是，快速为自己找到了一份稳定的工作 —— 虽然薪水不高，也是自己完全陌生、不曾感兴趣的学前教育工作不过，看了阳老师推荐的《无条件养育》成功拯救了我，让自己萌生 “或许可以试一试也不错” 的念头。尝试了也觉得并不如想象中坏。（好在离家不太远、有自己发挥和创造的空间、并且可以用以检验自己学到的学习理论）</li>
+</ul>
+</li>
+</ul>
+<h4 id="BP回顾"><a href="#BP回顾" class="headerlink" title="BP回顾"></a>BP 回顾</h4><h6 id="协作的力量"><a href="#协作的力量" class="headerlink" title="协作的力量"></a>协作的力量</h6><ol>
+<li></li>
+</ol>
+<p>我非常庆幸自己有机会加入一个优秀的 BP 项目，我原本打算一个人蛮干的，所幸最后还是参与了团队，完成一项不可思议的 BP。</p>
+<p>在写这份复盘之前，我已经先看过了数篇同学的复盘。其中，花儿笑同学的复盘有句话让我深感共鸣 ——“一个人做 BP 思路容易僵化，就像在沙漠中走，周围没有人，四周一点声音也没有，不知道自己还要不要往前走，要往哪走，只能在每周的教练答疑时听到一些建议和回声。”</p>
+<p>花儿笑同学的这一段剖白，正是我来到开智学习前自学好几年的心声！！（我也是误会阳老师自学成才，差点就要避开工作，住到图书馆旁边的学生之一…… Q.Q 阳老师大概会被搞到崩溃，哈哈！）来到开智学习之后，我才透过同侪们映射出来的镜子、教练们和老师的意见中，慢慢发现自己实际的能力定位。目前这一个定位还不算清晰，但总比自己一个人在沙漠迷路、找不到出口好多了。如果可以大概掌握自己有多少斤两，就能找到进步的道路。即便现在能力还不足，起码未来会通往哪里，就有了比较清晰的目标。没有参照物的学习，原来是如此无意义的，难怪老师一直鼓励要找到一位优秀的同学作为标杆，推动自己进步。不早点加入开智（主要也是学费问题），着实后悔，但未为晚也 —— 我，现在已经上了这艘船。</p>
+<ol start="2">
+<li></li>
+</ol>
+<p>开智用 GitHub 协作的模因是非常棒的，只要有尝试过，一定会体会到其中好处，我也不例外。犹记得我和组员筱颜两个初次使用 GitHub 的小白一同探索如何使用它来进行协作的趣事 XD~</p>
+<p>协作的过程中，感谢组长功夫熊猫扛起项目规划、制定架构的任务，剩下就是我们各自认领任务，分头去进行。这让我想起小时候听过的一个故事 —— 瞎子摸象的故事。这两年来，我对这个故事反复斟酌了几次。我想，对瞎子们来说，大象那么大，他们并无法靠一个人的力量描绘出整头大象的样貌。而这个隐喻放在现实世界也是一样的。世界那么大、那么抽象，我们就如同那些看不见的瞎子一样，穷尽一生，也无法靠自己一个人拼凑出一幅完整的，整个世界的拼图。因此，我们需要协作和分工，去创造出一个更大的项目，或是一起来描绘这一幅拼图。科学家们在做的事，不就是这个吗？</p>
+<p>这次的 BP，正是让我第一次更深入地认识了 “协作” 这一个概念。没有这个 BP、这个结业大作业，我不会在此时此刻停留下来去思考 “协作” 这回事。</p>
+<h6 id="我负责的部分"><a href="#我负责的部分" class="headerlink" title="我负责的部分"></a>我负责的部分</h6><p>在项目中，我对自己的定位是打杂～哈哈！因为组员们都比我优秀，为了不让自己拖大家后腿，我尽量找到自己能够做的地方，就努力去完成。总体来说，我主要参与了两个部分，一是项目的学术信息蒐集；二是多媒体编辑这一块。后者包括为 BP 的 Keynote 修图、编辑配乐等等，这是我大学学的专业，就不多谈了。</p>
+<p>整个项目过程，我真正倾注最多心血的环节是学术信息蒐集整理，这是我最感兴趣的部分。这种近距离的作业让我亲身对人格心理学有了全新认识。因为在大一（还是大二？）时，我在学校的心理学系旁听过认知科学和人格心理学，印象中人格心理学课的老师着重在精神分析这一分支，我来来回回听了很多遍佛洛依德和他的学生们如荣格、阿德勒的故事，老师也为我们介绍了好几种人格心理学测验 —— 我做过好几次 MBTI、职业测试、墨迹测试等等。但是，老师不曾谈及霍兰德模型和大五人格。这个 BP 项目让我有机会回顾以前学到的内容，也让我更加深入、全面地认识人格心理学，我觉得很幸运！</p>
+<p>在这次的学术信息整理，我与 Liling 组员合作，她主要负责变量这一块，我则自荐完成 “时间”、“空间”、“人物” 等部分。虽然我认为自己做得还是不够好，但我得到了非常大的收获 —— 做得比第一次在 Ch 2 进阶作业时顺手，完成度也更高、察觉到了第一次尝试时不足的地方，也更有感觉了。不过，我仍未有时间去碰 CiteSpace。</p>
+<h6 id="工作之后遇到的挑战"><a href="#工作之后遇到的挑战" class="headerlink" title="工作之后遇到的挑战"></a>工作之后遇到的挑战</h6><p>Ch 4 把进阶作业完成了 75% 左右后，虽然未能完成一份真正的职业报告，但我对接下来的路要如何走，已经比较清楚了。我对住所同个区域和附近区域的教育机构职缺投了履历火速找到一份学前教育的工作。一开始接到面试通知时，是十分犹豫的。这个选项排在我心中排序的最后一位，我倾向于选择其他的选项（因为我不曾对儿童教育感兴趣，以前的工作，也是老板知道我对此不胜任，让我带小学高年级的班）。可当时只有他马上就回应了。不管怎样，既然要去面试，就算不喜欢，也必须做准备、尽全力吧？于是我搁下了开智的课程，花一天时间开始为面试做准备。我快速阅览了阳老师对儿童教育方面非常推荐的《无条件养育》一书，思忖着这会不会是一个能够为我创造新机会的切入点，因而萌生想要把这工作做好的决心。我期待自己在这个行业磨炼和试错、用这个 “场” 来让自己进行压力测试，获得即时反馈，并且借机产出更多项目。我认为比起闷头一路自学，这一定会让我有更多收获才对。再者，我的工作是负责教幼童华语，这是我在校时最有热忱、引以为傲的学科，我一直心心念念要投入中国历史和文学的科研和教学呢！这或许就是一个切入点！！<del>新动机 get！</del>于是，就这样成功了。</p>
+<p>5wd3，老板让我下周开始上班，我就用当周剩下的时间，尽可能把学术信息部分处理完。6w 开始上班之后，因为初入一个从来没有接触过、也没有经验的环境和工作，搞得我心力交瘁，投入的认知资源是将近百分百的，于是 BP 就这样被我在没有多余的精力下忽略了…… </p>
+<p>遗憾的是，在 6w 周末做最后冲刺时，我也没有太多精力帮上更多的忙了。但自己对此觉得不甘心，还是希望能够参与并且协助项目完成。幸好 7wd1 我们国家公共假期，不用上班，有了 3 天连假。组长熊猫也特别在礼拜一请假来做项目。到后面这种套利、实作的部分，基本上我也不太插得上手了，没给大家添乱已经不错。所以就继续看资料、帮忙编了一点故事，还有从旁打杂如编辑 Keynote 的图片、音乐等等，当时觉得自己的参与度不够，对自己的表现并不满意。可是没有办法，在礼拜一时（7wd1），我的电力彻底用完了，开会时，听着大家讨论，意识到我们项目还有很多不足，觉得遗憾又不甘心，还是没辙，只能安慰自己能够完成就不错了。完成大于完美嘛！项目完整度还是很高的…… </p>
+<p>不料，第二天早上起来看见微信群，发现组长熊猫和胡丽居然熬夜把项目不足的地方给补了（原本自己觉得缺失的地方太多了，根本来不及修改了）。看着他们明明需要上班，却忙到凌晨五点半才去睡，忽然心情复杂，即感动又觉得这样的自己实在对不起如此优秀的组员…… 后来，我们的 BP 在 7wd2 圆满结束。特别感谢刘琪同学对我们 BP 提供反馈！！</p>
+<p>总体来说，BP 后期自己参与度不够，觉得收获相对小，是为遗憾，而幸好拥有优秀的组员补足这些方面。</p>
+<p>我唯有将这份遗憾，化为生产下一个 BP 项目的动力！！寄望于下一份 BP，加油！</p>
+<h6 id="对未来BP的期望"><a href="#对未来BP的期望" class="headerlink" title="对未来BP的期望"></a>对未来 BP 的期望</h6><p>这次 BP 路演，因为很累了也没有精力，只大概看了第一、二天的项目，信息量大到头脑无法负荷，实际上不知道同学都说了什么，只知道大家都做得超级棒，太厉害了！！第三天的项目，因为觉得继续这样草草观看实在对不起同学，所以打算先沉淀一段时间再重拾。也许重温课程之后，再看同学项目会更有感觉？也许复训之后再看一遍，会有更深体验？反正，应该不是现在。</p>
+<p>看到小麦、花儿笑、小亦和刘思思同学的项目复盘，不得不对他们佩服得五体投地，希望未来有机会拥有像他们一样的勇气，自己挑战一个想做的项目，一个人做还是带一个团队都可以。不过鼓励实现后者，因为一个人做的话，也许就错过很多火花和可能性了 XD。</p>
+<h4 id="主要收获"><a href="#主要收获" class="headerlink" title="主要收获"></a>主要收获</h4><p>对我而言，阳老师和课程组用心打磨的信分课程内容很重要，课程以外的东西更重要。开智的课程有点神奇，因为除了课程内容的信息之外，课程外的信息也非常丰富，比如一些内隐知识，就值得我们用心留意，去观察、发现，然后吸收。</p>
+<p>总结来说，结合课程内外的范围，我认识到以下自己认为关键、重要的概念：</p>
+<table>
+<thead>
+<tr>
+<th>信息分析的关键</th>
+<th>认知的关键</th>
+<th>输出的关键</th>
+<th>其他技巧</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>全局认识</td>
+<td>习惯大于目标</td>
+<td>迭代意识，完成大于完美</td>
+<td>用表格对资料降维</td>
+</tr>
+<tr>
+<td>交叉验证</td>
+<td>批量解决问题</td>
+<td>以解决核心矛盾（问题）的思路输出</td>
+<td>拆解问题</td>
+</tr>
+<tr>
+<td>权重意识</td>
+<td>内隐大于知识点</td>
+<td>刻意练习 + 复盘</td>
+<td>用卡片输出</td>
+</tr>
+<tr>
+<td> 4*5 理论、框架意识</td>
+<td>认知灵活性</td>
+<td>最小行动</td>
+<td>行动清单、检查清单降低认知负荷</td>
+</tr>
+<tr>
+<td>时间 - 空间 - 变量关系</td>
+<td>输出大于输入</td>
+<td>最小产品</td>
+<td></td>
+</tr>
+</tbody></table>
+<p>说实话，我并不是每个概念都真正了解，或有深刻认识。</p>
+<p>因此，在这里就只挑其中几个来展开。</p>
+<ol>
+<li></li>
+</ol>
+<p>首先，我自己感受最深刻的就是<strong>框架意识</strong>和<strong>全局认识</strong>。如同学霸同学（懒人投资的组长）在结业典礼的分享，课程有课程的框架，但我们在学习时，也得建立自己的框架，才能把学到的知识用起来。这也是《如何阅读一本书》在解说如何执行 “主题阅读” 时，建议我们应该做的事。我想，不单单在主题阅读时需要这么做，学习任何事物时、接收新信息时，我们都要这么做的。我们如今每一刻需要接收的信息量已经远远超越前人了，因此，我们必须建立起自己的框架，才能对信息做更有效的筛选，知道知识在自己的知识体系中的位置，进而掌握运用信息的方法、策略。</p>
+<p>查理・芒格曾经分享：</p>
+<blockquote>
+<p> 如果你们只是记得一些孤立的事物，试图把它们硬凑起来，那么你们无法真正地理解任何东西。如果这些事物不在一个理论框架中相互联系，你们就无法把它们派上用场。</p>
+<p>你们必须在头脑中拥有一些思维模型。你们必须依靠这些模型组成的框架来安排你的经验，包括间接的和直接的。你们也许已经注意到，有些学生试图死记硬背，以此来应付考试。他们在学校中是失败者，在生活中也是失败者。你必须把经验悬挂在头脑中的一个由许多思维模型组成的框架上。</p>
+</blockquote>
+<p>自己推测，为自己所学、所接触的信息和经验构建自己专属的框架，与芒格的这段分享相近（不知道有没有理解错误）。我们可以借鉴其他人的优秀框架，或者通过实践来把优秀框架转变成自己的框架，但我们无法不经消化地就把大量他人的框架安装进自己的大脑。而这不仅能够促进学习者本身的理解，还是导致学习效果差异的其中一个关键。</p>
+<p>再者，我们应该对于自己要学习的领域建立起一个全局认识。这是一种看似辛苦，其实是在偷懒的反常识方法。阳老师常对我们说：“知识是有限集合而非无限集合、有限大于无限”，但若没有掌握全局认识，这个概念难以对我们起到最大的作用。</p>
+<blockquote>
+<p>《知识大融通》作者威尔逊，他是一位生物学大拿，被称之为「当代达尔文」。他也是社会生物学的创始人。他把生物学和社会科学结合在一起，就产生了一个新的学科。之后在社会生物学基础上，又诞生了进化心理学，所以<strong>学科都是相通的</strong>。—— 阳志平《跨年答疑（2）：知识十二问》</p>
+</blockquote>
+<blockquote>
+<p><strong>知识源头更易相通</strong>。拿作家部落来说，上个月先读完艾柯，你会发现艾柯引用了卡尔维诺；而本月你读卡尔维诺，又会发现卡尔维诺引用了狄金森。—— 阳志平《跨年答疑（1）：学习十二问》</p>
+</blockquote>
+<p>我们知道知识、学科都是相通的，尤其在源头更容易相通。掌握了这些相通的模式和规律，可以快速帮我们打通所有学科、知识乃至于现实生活的学习、工作、套利的连结，可是，<strong>若没有掌握全局认识，知识对我们来说，一来则还是零碎的；二来则是独立的孤岛。</strong>我们仍会耗费大量时间在学习重复的内容而不自知，我们也许难以将信息归纳和统整在一起。这就是全局认识为我们做的事，是以它被称为课程中唯二的 “高阶模型” 之一。<strong>如果有了全局认识，我们能够迅速发现知识的框架、分布、模式，以及辨识哪些信息是重复的，甚至让我们产生权重意识，知道什么信息重要、什么信息相对不重要。</strong></p>
+<p>最近为了了解如何可以更有效教会将英语作为母语的幼童学生我们的华语（我们原本的母语），我好好地把《Fluent Forever》读了一遍。我认为，作者之所以厉害的地方，正是在于他将习得任意一个语言的方法做了全局认识，而这全局认识打通了所有语言的学习，因为它们是相通的。一开始在做时，也许会特别难、特别辛苦，但是一旦掌握，就可以迅速学会多门语言，比起没有全局认识和打通各个语言的连结，对一个一个单独的语言进行学习，是不是节省了出乎意料多的时间呢？我想，信息分析课让我们对学术、商业和职业分析进行全局认识的用意，大概也是这样吧？</p>
+<p>再来则是阳老师一再提醒的 “<strong>权重意识</strong>”。我想，除了全局认识可以帮助自己认清如何分配对信息、行动的权重之外，更重要的是元认知 —— <strong>我究竟想做什么？我要解决什么问题？</strong>这是学霸同学在结业典礼的分享也有谈及的部分。康锋等同学在做各个进阶作业时，就已经很好地展现出如何具体执行这个概念。我认为，我们一定要有个清楚的目标、目的，才知道如何选择策略、分配认知和行动上的权重。这将涉及一个关键题眼 —— <strong>我们要解决的核心矛盾是什么？</strong></p>
+<p>我发现，不论输出还是输入，都必须先找到自己的目标、目的，即要解决的核心矛盾（输入如我想要从这个课程或书本学到什么？我为什么要学？要解决什么问题？；输出也是一样，具体可以参考老师和教练们对我们做 BP 的建议）。因此，下次不论输出或输入，我都应该停留下来好好思考这个问题的答案。</p>
+<ol start="2">
+<li></li>
+</ol>
+<p>关于 “习惯大于目标”、“内隐大于知识点”、“批量解决问题” 等，第一章的作业已经仔细探讨过了，这里就不赘述。认知灵活性对我而言则仍是一个完全陌生的概念，就不展开了。</p>
+<p>完成 BP 之后，对输出相关的感念感触很深，如刻意练习所学知识（行动清单上的），并在一次次行动后复盘。这些行动，可以是对所学总结、归纳出来的最小行动。而每一次输出时，锁定最小产品，并拥有迭代意识，知道完成大于完美，先把一个核心功能做出来，再于后续进行进行迭代、完善。我将自己对这一概念的感触写在 “结语” 部分。</p>
+<h4 id="课后的改变和成果"><a href="#课后的改变和成果" class="headerlink" title="课后的改变和成果"></a>课后的改变和成果</h4><p>没有改变的学习不算学习，来回顾上完信息分析课程之后，我自己的改变吧～？</p>
+<ul>
+<li>工具篇<ul>
+<li><strong>爱上 Markdown</strong>：2018 年下半年开始实现用 Markdown 在印象笔记写作，然后发表简书，再转而发表到 GitHub blog。课程期间，直接用 Typora 书写 Markdown 文档。尽管发生过没存档，辛苦写的作业没了的悲剧，但因为方便上传作业、GitHub 协作，结果上瘾了，回不去了……</li>
+<li><strong> 爱上 GitHub</strong>：听了阳老师分享自己如何用 GitHub 仓库进行个人知识管理，蠢蠢欲动，初用 GitHub 协作时探索了一下基础用法及功能，慢慢上手了。完成 BP 后，开始尝试用似有仓库进行自己的知识管理。</li>
+<li><strong>重新使用 Zotero</strong>：在之前的作业内写过自己初用 Zotero 的悲剧，因为课程重拾了，也对正确的用法更加了解了。待日后练习、上手及内隐，加油！</li>
+<li><strong>检索信息的方式改变</strong>：正在慢慢内隐自己在信分课程学到的信息检索策略。目前比较常用的是 Ch 1、Ch 2 的策略，商业和职业还是不上手，没有内隐。</li>
+<li><strong>对工具的偏好改变</strong>：课程推荐了大量工具，还未整理成清单或工具箱，但是用得很欢乐，大概也很难回去了。慢慢意识到好的工具是如何帮助我们提升作业效率、节省时间。</li>
+</ul>
+</li>
+<li>心态、行动篇<ul>
+<li>整体<ul>
+<li>深深地认识到<strong>最好地开始做一件事的方式就是马上动手开始做！</strong></li>
+<li>意识到输出的重要性，虽然以前就知道了，但没有那么深刻，也没有比较完整地执行。做完 BP 及看了同学的 BP 之后，感触很深。</li>
+<li>养成了复盘的意识和习惯，并学会如何写复盘、周报和日报。</li>
+<li>不怕失败和被取笑，勇敢输出，然后再迭代。课程前的目标 —— 成长型思维和打败完美主义，似乎有做到了。</li>
+<li>了解到框架的重要性。</li>
+<li>深深体会到全局认识的重要性，宁愿一开始辛苦，未来都安逸，都不要因为懒惰而一直重复消耗不该浪费的精力及时间。</li>
+<li>对如何进行全局认识有了更深的体会。</li>
+<li>开始对 “权重意识” 有感觉，隐约知道该如何做了。</li>
+<li>学会用卡片模式输出作业、报告。</li>
+<li>学会用表格对资料进行降维。</li>
+</ul>
+</li>
+<li>课程<ul>
+<li>更了解自己，对职业的观点也有所改变。</li>
+<li>因为课程找到了工作～</li>
+</ul>
+</li>
+<li>BP<ul>
+<li> 做了 BP 对人格心理学有更深入、全面的了解。</li>
+<li>有了可以用来滚雪球的产品。</li>
+<li>对输出的目标制定、选题方向，以及迭代概念有了比较明确的认识。</li>
+<li>了解到队长和组员应该如何协作，以及各自的任务范围。对 “协作” 有了新的认识。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="结语：明灯已指引我来到开智，故事便会改写，因为我愿意改变"><a href="#结语：明灯已指引我来到开智，故事便会改写，因为我愿意改变" class="headerlink" title="结语：明灯已指引我来到开智，故事便会改写，因为我愿意改变"></a>结语：明灯已指引我来到开智，故事便会改写，因为我愿意改变</h2><p>也许我真的即愚昧个性又差，也没有良好习惯基础，不过明灯已经指引我来到开智了，那故事便会改写。因为，我愿意改变，也迫切期待着蜕变之后的自己（不管是蜗牛还是毛毛虫变成蝴蝶的隐喻）。我已经慢慢地从僵固型思维过渡到成长型思维。</p>
+<p>我学会了 “迭代” 这一重要的概念。没有一个草图是一次就完美到位，一切都需要层层加叠，组合起来才是最终完整而美好的模样，而且，这个成品不是静止的，它将随着时间流动，经历一次次改进、升级，最终找到自己的最佳定位，得以展现最具优势、最出色的面貌 —— 正如我自己的人生一样。</p>
+<p>我是我自己的产品，而我又创造出许多产品。我最终会活成什么样的人生呢？我将用一辈子的时间探索着。</p>
+<p>2018 年年底能来到开智，跟开智小伙伴们一同跨年，真好！</p>
+<h2 id="反思：未完待续的故事"><a href="#反思：未完待续的故事" class="headerlink" title="反思：未完待续的故事"></a>反思：未完待续的故事</h2><h4 id="做得好的地方"><a href="#做得好的地方" class="headerlink" title="做得好的地方"></a>做得好的地方</h4><ol>
+<li>用心对待每一份作业，提交量高，并且在这两方面收到肯定。希望我日后做作业时能够真正完成，因为目前的作业普遍倾向挖坑很多，却没把坑填完的状态。</li>
+<li>抱着感恩、向同侪学习的心态，实践成长型思维，推动自己前进。找到优秀同侪作为标杆学习。</li>
+<li>多鼓励同学，就是多鼓励自己。别人鼓励我时，我感受到一份温暖，我也应该多将温暖与更多人分享。</li>
+<li>有要讨论的话题在讨论区先写下自己的想法，收获老师和大家的反馈。</li>
+<li>要提问前，写整理自己的情况和做法，再请教别人。</li>
+<li>即时写下自己的想法，好的、坏的、对的、错的、优秀的、可笑的，只要先写下来，就有机会得到反馈，也有了进行反思和迭代的机会。最重要的，是写下来的信息如同一棵棵幼苗，它们之后会如何成长，我现在还不知道，我只知道，这么做就可以避免它们被时间的洪流及大脑中信息的洪流冲走。</li>
+<li>试着养成即时闭环的习惯。</li>
+</ol>
+<h4 id="我的不足之处"><a href="#我的不足之处" class="headerlink" title="我的不足之处"></a>我的不足之处</h4><ol>
+<li>权重意识的缺陷明显，做作业、回答问题没抓到题眼，针对关键深入作答，以刻意练习所学知识、技能。比较多时候每个部分都希望做好、投入的心血也一样多，容易心力交瘁，却错过最关键部分的臻于至善。而那些最关键的部分，才是值得投注最多心血，让自己学到最多的地方。如同学在商业进阶作业对财报的学习等等。</li>
+<li>做进阶作业时，老是不停掉坑，容易遇到行为瘫痪的时候。这些时候往往我都会花费大量（数小时到数天）时间跟坑死磕，也无法好好算计自己用的时间。不能进入心流，却还是逼迫自己毫无意义地消耗时间和精力。</li>
+<li>虽然一直提醒自己完成大于完美了，还是有不少时候因为追求完美导致行为瘫痪。好在拥有优秀同侪的压力推动，这种情况已经改善很多，总算输出不少东西，尽管回头看可能都要摇头叹息，还是让人小小地高兴。</li>
+<li>实作部分弱，需加强练习、多多练习、刻意练习。</li>
+<li>作业常常写得比较看不到重点，自己写着、看着也晕。</li>
+</ol>
+<h4 id="日后改进"><a href="#日后改进" class="headerlink" title="日后改进"></a>日后改进</h4><ol>
+<li>在开始一件事时，不管是工作、答题、读书或学习，要事先找到关键目标、环节，厘清不同重要程度的部分需要投入的资源，选定策略再开始做，以免陷入 “看起来勤劳” 的懒惰、虚假的勤劳，结果收获远远不如预期。</li>
+<li>希望之后能够明确地用番茄时钟记录进出任务时间，如果卡壳两个番茄以上，就可以跳出来，先做其他事情，等到厘清思路之后再回去做，以免做毫无意义的浪费。也可以趁机参考别人如何做，为自己找到 参考、方向和灵感。</li>
+<li>持续斟酌最小行动、最小产品。用卡片输出，在抓到问题的关键之后，先对整体进行一个全局的认识，建立框架，然后再一一针对单独的环节专注输出，适时回去调整框架。持续贯彻 “完成大于完美” 的原则，直到深刻地印在脑中，化为习惯。</li>
+<li>完成行动清单、笔记之后，要多练习实作部分。（结合工作、自修计划、输出项目等等）</li>
+<li>能用表格、图片表达的地方，就不要用落落长的文字表达，尽可能简化、视觉化。觉得内容太多了，也许试试看能不能限制在 4*5 的范围内？</li>
+<li>即便不能做完全部作业也没关系，需要专注在一个单一的对象（因为我的注意力比较单一），直到完成为止。学习也是，不要同时进行好几个，结果最后全部都没成果。评估自己有没有学好的秘诀在于观察自己有没有内隐。</li>
+</ol>
+<h4 id="行动清单"><a href="#行动清单" class="headerlink" title="行动清单"></a>行动清单</h4><ul>
+<li><input disabled type="checkbox"> 在 GitHub 私人仓库里面，建一个信分课的工具箱（清单），把课程学到的信息分析工具统整、梳理一遍。</li>
+<li><input disabled type="checkbox"> 继续完成课程一些比较重要的卡片笔记。</li>
+<li><input disabled type="checkbox"> 把课程过程中未完成的行动清单给完成。</li>
+<li><input disabled type="checkbox"> 从全局认识的视角出发，为自己未来两年的工作设计一个自修计划，以及设定输出项目。参考阳老师<a href="https://www.yangzhiping.com/psy/self-edu.html">《给自己的教育》</a>。</li>
+<li><input checked disabled type="checkbox"> 了解如何书写周报、日报。</li>
+<li><input disabled type="checkbox"> 了解如何使用行动清单。</li>
+<li><input disabled type="checkbox"> 了解 WOOP 和 SMART。</li>
+<li><input disabled type="checkbox"> 写一篇人格心理学的综述。</li>
+<li><input disabled type="checkbox"> 完成未完成的进阶作业，如商业分析、职业报告等。（或者复训再做？）</li>
+<li><input disabled type="checkbox"> （课程结束之后）思考一下，我希望花时间了解全局的 4/20 个领域有哪些？</li>
+<li><input disabled type="checkbox"> 为课程内容做几张 mind maps。</li>
+<li><input disabled type="checkbox"> 完成行动清单、笔记之后，要多练习实作部分。（结合工作、自修计划、输出项目等等）</li>
+</ul>
+<h2 id="讨论和分享：在密林中寻觅你专属的故事"><a href="#讨论和分享：在密林中寻觅你专属的故事" class="headerlink" title="讨论和分享：在密林中寻觅你专属的故事"></a>讨论和分享：在密林中寻觅你专属的故事</h2><p>最珍贵的行动是找到自己的学习节奏、了解自己。千万不要勉强走上一条不属于自己的道路，下面借用一句阳老师的话：</p>
+<blockquote>
+<p><strong>鹰击蛇行，各行其道</strong>。如果你是一个草根，请尽可能不要装精英，否则会放大你的性格弱点。</p>
+</blockquote>
+<p>在学习上，也是一样的。这使我警惕自己，在学校装了当了伪学霸好多年了，是时候认清自己，然后走上一条真正属于自己的道路了。</p>
+<blockquote>
+<p>如果你是一个普通学习者，请尽可能不要装学霸，否则会放大你的性格弱点。</p>
+</blockquote>
+<p>优秀的同侪、学霸确实很让人羡慕，但我无法成为他们，我只能成为自己。没有人可以一蹴而就，所以再羡慕，我也无法跳过自己未走完的阶段，直接达到终点。</p>
+<p>能做的事情，是调整自己的心态，成长型思维，好好向老师、教练队长和大伙们学习，按照自己的节奏和步调一步步让自己变得比昨天更好，那便已经是最大的成功了。</p>
+<h2 id="志谢：要感谢的人依旧很多——致一同创造故事的人们"><a href="#志谢：要感谢的人依旧很多——致一同创造故事的人们" class="headerlink" title="志谢：要感谢的人依旧很多——致一同创造故事的人们"></a>志谢：要感谢的人依旧很多 —— 致一同创造故事的人们</h2><p>首先，我非常感谢开智学堂为我们精心打造一堂这么棒的课程，谢谢阳老师一路用心指导、慷慨解囊的答疑。很开心能够有这样的机会近距离接近一位超级厉害的大牛，阳老师是我的偶像和学习榜样，是我怠惰时推动我努力不懈的动力，我要持续向您学习！谢谢课程组辛劳付出，虽然过程中发生了小小不太愉快的意外（盗版），但我相信您们的努力所有学员都看在眼里，并深切感受到。</p>
+<p>感谢教练团队和队长团队那么有热忱，积极带领、引导我们完成这趟英雄之旅。我总是从小何教练、掬元教练、李仁冲教练身上得到很多的启发，我真敬佩您们，也非常感谢您们！谢谢陈晨教练和郑嘻嘻教练在过程中对我的作业提供反馈，让我能更具体地知道自己在执行上的优缺点，进而改善。否则，我将一个人蛮干下去，错过关键和正确方法，然后又迷路…… （忽然发现我真的不管在现实还是非现实物理世界都极度容易迷路…… = =lll）如果还有未提及的教练，不是因为您们做得不够好，而是我自己未有出席全部教练分享及答疑，并且尚未看完回放影片…… ORZ 朱汉宜教练很厉害，是我自己作为商业小白听不懂您的分享（其他同学皆收获良多，只有我一脸懵 X，哈哈）</p>
+<p>说到我们九大州分队的 heroine，非我们舟舟队长莫属！！舟舟队长简称舟队 XP，是一位持续为我们分队提供积极正能量的关键人物。从开学典礼优秀的分享（舟队美女灰常漂亮 XD）就让我留下深刻印象，到每一次热心举办线上交流会，都让我觉得很感动。记得有一次，忙碌的舟队为了我们的学习效果，还辛苦地在一天内办了两场交流会。只可惜，我因为个人的原因，到目前为止总共只出席了一场交流会（舟舟队长，我对不起您！！m (_ _) m 我对临时被 cue 的交流抱有恐惧感…… QAQ ，如果可以做个安静的小美女 (?) ，静静聆听教练和同学分享就好了，哈哈哈哈哈）总而言之，舟队每一次的用心，我都能够深刻感受到，也一直默默在心里感恩这位优秀的队长。能够由您带领我们，真幸福！表白我们舟队！❤</p>
+<p>另外，我一定要提一次自己深以为傲的优秀 BP 团队 —— 我们人格心理学全局认识 BP 的七五战队！！能完成这次 BP，最最庆幸的事，就是拥有一位最优秀的组长，功夫熊猫小哥哥 XP。组员胡丽曾说 “队长很给力，其他人也要努力” 正是我在这项 BP 中燃烧的原因 —— 正因为你的优秀，推动我不遗余力为项目付出。我只想给大家推荐，我们组长靠谱、稳重、淡定、思路清晰，以及非常有责任感！另外一半的动力，来自我引以为荣的组员胡丽（北京大区队长）、Liling 和筱颜。胡丽有 BP 经验，为我们提供了很多实用的建议及经验之谈，是我在组内的学习标杆。在项目的学术信息这一块，我和 Liling 一起合作，短短两天，我们私下联络、交谈几次，实现即时碰撞，也让我获益良多。和 Liling 合作，我从她身上得到不少建议，也通过交流让我意识到自己有哪些不足的地方，这是让我激动的合作。筱颜则是一位让我惊喜的成员。话说，我们 BP 最终展现方向，其雏形还是筱颜在会议时提出的呢！我对商业真的极度陌生，筱颜为我们项目提供的商业领域信息，我是非常服气的（抱拳）。再对我的全体组员说一次感谢！我们一共进行过 4 次 Zoom 线上会议，每一次碰撞，都是满满的火花。每当在执行项目过程中流失能量，开始缺乏动力、接近行为瘫痪时，总能在开会找到前进的力量，十分神奇。更神奇的，是这四次会议治好了我对线上即时交流的恐惧。每一次会议前，我都做了提前的准备，以便可以顺利表达自己的意见和想法。虽然不能说十分顺利，但还是有点效果（笑～）。此外，特别鸣谢小何教练一路充当我们项目的明灯，提点我们少绕几个坑。您的提醒和建议，是我们几次改善，最终建立起一个完整项目的关键。</p>
+<p>在整个上课的过程中，我也从同侪身上学到很多很多，这里特别感谢我的学习标杆榆贝同学、康锋同学、皓同学、冁然同学、淡暖同学、小麦同学、大蔚同学，你们的优秀是我在学习过程中即便掉坑、无数次想放弃，却始终坚持到最后的原因。婉嫣同学、花儿笑同学、忠同学、刘思思同学、筱颜同学对我的鼓励，也让我在掉坑时精神一振，维持积极正面的心，用以鼓励自我。非常感谢你们曾给我伸出这一根根稻草。</p>
+<p>英雄之旅，何谓英雄？—— 只因，一路有你。（此处插入小黄人微笑表情）</p>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><ul>
+<li>kidult00 (2019-01-24)，开智学堂微信公众号，《人生和职业可以被规划吗？一起换个角度重新看问题》。</li>
+<li>信分三期的 BP 线上交流</li>
+</ul>
+<h2 id="Changelog"><a href="#Changelog" class="headerlink" title="Changelog"></a>Changelog</h2><ul>
+<li><p>2019-01-27 新增 “分享” 模块和内容、补充 “做得好的地方”、“主要收获” 和 “课后的改变和成果” 内容。更新 “日后改进” 内容。</p>
+</li>
+<li><p>2019-01-27 新增 “志谢” 模块和内容、补充 “BP 回顾” 内容。</p>
+</li>
+<li><p>2019-01-26 创建初稿大纲、完成一半的初稿（除 “复盘” 部分的 “BP 回顾”、“主要收获”、“课后的改变”；“讨论和反思” 的 “做得好的地方”）。</p>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>复盘笔记</category>
+      </categories>
+      <tags>
+        <tag>信息分析</tag>
+        <tag>开智学堂</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【读书笔记 0001】懒人图解简报术</title>
+    <url>/Book0001-slideshow&amp;Information-visualization/</url>
+    <content><![CDATA[<p><img src="/Book0001-slideshow&Information-visualization/book0001.jpg" alt="book0001"></p>
+<h1 id="《懒人图解简报术》读书笔记"><a href="#《懒人图解简报术》读书笔记" class="headerlink" title="《懒人图解简报术》读书笔记"></a>《懒人图解简报术》读书笔记</h1><h3 id="1-缘起"><a href="#1-缘起" class="headerlink" title="1 缘起"></a>1 缘起</h3><p>​	信息可视化，俨然是未来趋势。<strong>图解呈现</strong>，为其一例，并已流行多年。<strong>懒人包</strong>，顾名思义，是 “让没时间、精力的懒人也能使用的封包” ，而在信息领域，懒人包指的是有人热心地将一个事件整理成简要、完整的说明，以便一般人快速了解事件始末、详情。近年来，懒人包用途在新闻、传媒领域，日益普及。</p>
+<span id="more"></span>
+
+<p>​	事实上，各领域通用的传媒与教育通用工具 —— <strong>简报</strong>，也是使用视觉呈现信息的一种管道。<strong>若能善用图解技巧，结合懒人包概念，制作简报，让每份图解简报在有或没有主讲人的情况下，都能发挥更大优势</strong>，那么，各领域的人，都有机会，<strong>通过大量生产该领域的懒人图解简报，建立自己的品牌和知名度</strong>，以自身专业且独特的信息，交换读者或观众的信任。</p>
+<p>​	简报的重点不在于设计，有的简报课程胡里花俏，把普通人培养成专业设计师，但其实，这样的简报往往复用性不高，沦为消费品，性价比和时间回报率太低了。从另一个角度来说，非设计师出身，半路出家的我们，耗时费力，也不容易在这方面胜得过人家的专业。</p>
+<p>​	因此，对一般简报制作者来说，<strong>简报的重点，应该以观众为首要；其次则是内容</strong>。懒人图解简报概念提出者，林长扬认为，<strong>懒人图解简报的核心，在于省时和促进行动</strong>，只要你有一颗<strong>分享知识的心</strong>，就可以制作懒人图解简报。而我，从《懒人图解简报术》一书中，最大的收获是，使用 “<strong>扁平化图示</strong>” 制作图解简报的概念。</p>
+<hr>
+<h3 id="2-森林"><a href="#2-森林" class="headerlink" title="2 森林"></a>2 森林</h3><p>上文说到，懒人图解简报的重点，应该<strong>以观众为首要；其次才是内容</strong>。这是因为，懒人图解简报的目的，是为了让观众了解他们原本不懂的东西。为此，简报的标题、内容、版面等，都需要从他们的角度出发。因此，比起简报知识含量，发想懒人图解简报的内容之前，<strong>第一步，我们要先剖析观众</strong>。</p>
+<h4 id="但丁，你指导的对象"><a href="#但丁，你指导的对象" class="headerlink" title="但丁，你指导的对象"></a>但丁，你指导的对象</h4><p>剖析观众，重点在于，思考<strong>你真正想锁定的是哪些人？</strong>知道我们的产品是要卖给谁，我们的产品才有卖点和市场。懒人图解简报和观众的关系亦是如此。</p>
+<p><strong>剖析观众，三步走起：</strong></p>
+<blockquote>
+<p><strong>设定群众  →  走入人心  →  预测问题</strong></p>
+</blockquote>
+<p><strong>设定群众，是为了收集观众背景资讯</strong>，这样，我们才能<strong>用他们了解的语言、故事和场景，来讲他们不懂得东西，让他们有熟悉感，帮助理解</strong>。例如，观众的<strong>年龄</strong>，设想观众的年龄后，才能去思考这个年龄层的人经历过什么、他们的背景是什么、他们的喜好是什么，从而发想更精准的懒人图解简报。就像我本身的图解简报，主要是针对初中、高中学生制作的语文、数学、理科考纲知识点简报，若不走进青春期少女少年的世界，一味用传统教学方式对他们灌输知识，无法引起学生学习动机、吸引他们的眼球和注意力，这样的做法，未必是更优解。如果不是针对考生制作的懒人图解简报，其他需要收集的信息，还包括观众的<strong>职业、兴趣、动机</strong>等等。</p>
+<p><strong>走入人心，是为了换位思考</strong>。收集了观众的背景信息，这时，我们对于 “要把知识点讲给谁听” ，这对象的面貌，已经相对清晰。现在，我们要抓住他们 “害怕” 或 “渴望” 的东西，催动人最基本的驱动力，让他们产生强大的力量。换句话说，在发想懒人图解简报时，若能发现观众心里害怕或渴望的事，我们就能赋予懒人图解简报更大的意义，这么一来，观众才会把它放到心里面，并留下深刻印象，且还会愿意去散播分享。</p>
+<p><strong>预测问题，是为了让观众觉得 “他好懂我！”</strong> 经过收集背景信息，拼凑观众大致面貌，深入探讨他们内心害怕或渴望的事之后，我们就能进一步设想他们想问的问题，以便更精准地发想内容，并在情节设计上，先把这些疑问给问出来。这么一来，作者和观众的距离，在无形中拉近，观众能不发出赞叹吗？ “哇，这个作者怎么知道我心里在想什么，他好懂我！”</p>
+<p>到这里，你已经知道这片森林的大致走向，不再是盲目乱闯。无论是标题撰写、内容发想、版面设计疑惑图像思考等，你都可以很快完成。因为，你已经有一个明确的目标，知道这份懒人图解简报到底是要做给谁看的了。</p>
+<p>简单来说，<strong>懒人图解简报的核心，在于分享知识，达到省时和促进行动</strong>的效果。剖析观众，相当于拆掉作者和观众之间的墙壁，让你变成观众的专业朋友、让他们听得懂你说的话、让他们认为你知道他要什么、让他们认为，你拥有真正的专业，可以帮助到他们。</p>
+<p>勾勒出观众的大致面貌，你可以针对他们的需求做出适当的标题或版面，达到吸睛效果；你也可以避免知识的诅咒， “对他们讲人话” ，用他们懂的语言，讲解他们不懂得东西，令他们不仅有熟悉感和代入感，还会快速理解和吸收你要传递的知识，并留下深刻印象。你甚至在制作懒人图解简报时更加省时省力，因为，你已经有了相对具体的制作目标，不会再盲目随心所欲，加入更多无效的内容、设计、图片……</p>
+<h4 id="维吉尔在森林中的地图"><a href="#维吉尔在森林中的地图" class="headerlink" title="维吉尔在森林中的地图"></a>维吉尔在森林中的地图</h4><p>接下来，我们就可以挪步到简报 “<strong>内容</strong>” 的部分了。</p>
+<p>本书作者提醒，为打破知识诅咒，节省彼此时间，在盘点资源、对观众深度剖析之后，必须<strong>思考懒人图解简报如何让观众易懂</strong>。易懂的第一步，就是 “<strong>整理</strong>” ，<strong>确保懒人图解简报的内容都是观众需要的</strong>。换句话说，我们需要找到 “自身专业” 与 “观众需要” 的交集，这时取舍就非常重要。</p>
+<p>这时，拥有一套大致框架作为每次主题的参考，能方便筛选内容。结合上一步剖析观众之后，掌握到观众 “害怕” 或 “渴望” 的信息，作者总结了一套 SCAN 法则。</p>
+<p>由于懒人图简报大多是做给非专业的人看的，因此<strong>要做到老妪能解</strong>。</p>
+<p><strong>SCAN 法则</strong>与<strong>让内容通俗易懂</strong>的做法，下文将一一介绍。</p>
+<p><img src="/Book0001-slideshow&Information-visualization/SCAN.png" alt="SCAN"></p>
+<h5 id="他知道的层级"><a href="#他知道的层级" class="headerlink" title="他知道的层级"></a>他知道的层级</h5><p>简报的参照框架，对作者来说，能帮助作者快速有效筛选出简报内容；对观众来说，则能在他们脑中建立清楚框架，达到便于理解的目的。</p>
+<p>作者总结的 <strong>SCAN 法则</strong>，就像说故事的情节线，有高低起伏，目的是用架构牵动观众心情，进而带动观众情绪起伏，让他们感受到高潮迭起的刺激与惊喜。这样，他们印象更深、更有记忆。</p>
+<p>SCAN 法则的字母，分别代表其四个组成成分的首字母，每个部分伴随着一条心情起伏的曲线：</p>
+<ol>
+<li><span style="background-color:#00aa90"><font color="#FFFFFF"><strong>S</strong>ituation（现况）</font></span>：现在发生什么事？简洁的向观众说明现状，它能带动观众感受到自己也身在其中的心情；</li>
+<li><span style="background-color:#00aa90"><font color="#FFFFFF"><strong>C</strong>onsequence（后果）</font></span>：上述的情形会导致什么事发生？它能影响观众心情开始沉到谷底，感受到改变的必要；</li>
+<li><span style="background-color:#00aa90"><font color="#FFFFFF"><strong>A</strong>ims（目标）</font></span>：为了避免或达到上述的后果，我们可以怎么做？它使观众开始看到曙光，心情逐渐从谷底爬升；</li>
+<li><span style="background-color:#00aa90"><font color="#FFFFFF"><strong>N</strong>eed（解法）</font></span>：想达到这个目标，我们该怎么实际进行？它让观众感受到自己全新的改变，心情提升到比一开始的现况更高的高峰，创造最后的高潮。</li>
+</ol>
+<p>SCAN 法则可分为两大区块，第一区块是 Situation （现况）与 Consequence （后果），目的是吸引观众上钩，让观众想看，并且继续看下去。第二区块是 Aims （目标）与 Need （解法），这部分是整份懒人图解简报的精华。要给观众的知识、观点、好用的步骤…… 等都在这里，是要让观众豁然开朗、在短时间获得大量好知识的重点。</p>
+<p>SCAN 法则架构的具体内容，请参照以下表格：</p>
+<table>
+<thead>
+<tr>
+<th>架构</th>
+<th>具体内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td> S / Situation 现状</td>
+<td>作为开头，要简洁快速地说明这份懒人图解简报是要讲什么，因此建议利用<strong>故事、场景、案例</strong>…… 等来做开头，让观众能很快地进入情境，并且有性趣继续看下去。此外，也可以用 “<strong>点出问题</strong>” 的方式让开头更加加分 —— <strong>让对方知道这是迫切要解决的问题，才会吸引对方看下去</strong>。</td>
+</tr>
+<tr>
+<td>C / Consequence 后果</td>
+<td>点出问题之后，接着说明这个问题会造成什么后果。—— 如果问题跟自身没有什么相关，也不会造成任何危害的话，大多数人就不会放心思在上面。这阶段的目的，是用 “后果有可能危害到观众本身或是他们的亲朋好友” 来提高观众的关注度，并且牵动他的心情。此外，在这一步做到 “打进心里” ，便可达到 “心情有起伏，观众有记忆” 的效果。可从 <strong>“害怕” 或 “渴望”</strong> 两点着手。</td>
+</tr>
+<tr>
+<td>A / Aims 目标</td>
+<td>提出目标，为观众说明如何避免刚刚提到的后果（或是达成他们的渴望），而且这个目标最好能对观众来说是个独特的观点。—— <strong>懒人图解简报最大的特色，就是作者浓缩淬炼过的知识</strong>，因为每个人专业领域不同、诠释的方法不同，因此产出的作品都是独一无二的。否则，这份懒人图解简报就没有价值了。—— 当你要<strong>制作一份懒人图解简报时，请先想想，关于这个主题，我有什么最特别的东西可以放进去，这就是让我的懒人图解简报与众不同的核心</strong>。</td>
+</tr>
+<tr>
+<td>N / Need 解法</td>
+<td>解法，就是 “<strong>实际可行的步骤</strong>” 。学习最后一环就是 “行动” 或 “运用” ，否则，就会忘掉啦！懒人图解简报除了能让观众们在短时间内获得大量好知识之外，最好还能引发改变，促进观众实际行动。—— “实际可行的步骤” 能降低观众行动的门槛，让观众看完就能做、会做，行动了，观众自然就更容易记住。<br> - 什么主题，都要帮观众规划步骤，建议把步骤切分的小一点，观众行动的几率就越高，这份懒人图解简报的价值就很高！ <br>- <strong>如何把步骤切小一点？</strong>秘诀就是<strong>讲人话</strong> —— <strong>原始知识 → 拆解转化 → 一看就懂</strong>。</td>
+</tr>
+</tbody></table>
+<p>为了方便读者参考，《懒人图解简报术》作者林长扬在书中也总结出十种常见的具体主题简报框架，读者们有兴趣可以参考看看。我的看法是，不论哪个主题的知识传递，本质上多是关联观众，引起他们的兴趣，告诉他们这事对他们有哪些好处，然后再带着观众一起行动。</p>
+<h5 id="每层级的介绍"><a href="#每层级的介绍" class="headerlink" title="每层级的介绍"></a>每层级的介绍</h5><p>有了作为简报内容骨干的架构，我们就可以继续填充内容的血肉。再次重申，不论是简报框架，还是具体内容，我们的目的，都是让知识的传递通俗易懂、老妪能解，这样观众才能记住这些内容，这场沟通交流，才更高效。</p>
+<p>这时，我们需要用观众听得懂的话，来讲他们不懂的东西。我们剖析观众的优势，现在就能发挥出来。</p>
+<p>了解了观众的背景、他们知道的事、他们会感兴趣的事物，我们就能利用<strong>譬喻</strong>、<strong>转化</strong>的方式，让艰深的专业术语变成观众好吸收的内容。在实际操作上，我们可以利用 “<strong>故事</strong>” 跟 “<strong>经验</strong>” 来协助转化内容，因为故事跟生活经验都已经存在观众脑海里，只要把专业术语跟故事经验做连结，观众就能很快的了解我们讲的是什么！例如，童话故事。</p>
+<p>我们的目的：<strong>故事 →  转化 → 秒懂</strong>。</p>
+<p>林长扬建议，利用简单的故事，就能有效的让顾客<strong>了解要讲的内容</strong>，并且给顾客自己做选择，这就是故事的好处。除了故事，我们也可以利用观众日常生活的经验来辅助说明，借此产生熟悉感，并且让观众秒懂！因此，制作懒人图解简报时，<strong>不要用专业来解释专业</strong>。在实际制作时，请先检查懒人图解简报的内容，看看有没有太多专业术语，请一一的挑出来并且中翻中，利用 “故事” 跟 “经验” 转化成平易近人的内容，观众看得秒懂，吸收了好知识，懒人图解简报才有价值！</p>
+<p>在内容部分，给大家最后的提醒，懒人图解简报，除了 “懒人” 代表的 “简单易懂、省时高效” 的目的，及 “简报” 所表示的传递方式外，其中的 “图解” 这个重要呈现方式和元素，也不容忽略。图解方面的攻略，将于本文下节叙述。</p>
+<p>到这里，结合上述内容，我们给大家总结一下，懒人图解简报术的三大原则：</p>
+<table>
+<thead>
+<tr>
+<th>懒人图解简报术三大原则</th>
+<th>目的</th>
+<th>做法</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>用图不用文</td>
+<td>达到 “图优效应” 以增加记忆</td>
+<td>选图三原则：高画质图片； 高相关性； 好记忆。</td>
+</tr>
+<tr>
+<td>复杂变简单</td>
+<td>让观众一看就懂</td>
+<td>一看就懂三原则：  <br>1. <strong>架构</strong>：利用引人入胜的架构引导观众； <br>2. <strong>内容</strong>：将知识淬炼转化，让观众一看就懂； <br>3. <strong>图片</strong>：做到排版整齐，没有视觉上的压力。</td>
+</tr>
+<tr>
+<td>不用面对面</td>
+<td>让观众在没有讲者的情况下，也能看懂</td>
+<td>别做：不要复制剪贴； 不要过于琐碎；<br>要做：  譬喻； 故事； 转化。</td>
+</tr>
+</tbody></table>
+<p>记住，这个环节，我们的目的是在<strong>开始制作懒人图解简报之前，写下简报架构与精华内容，以便于后续快速制作</strong>。</p>
+<hr>
+<h3 id="3-面包屑"><a href="#3-面包屑" class="headerlink" title="3 面包屑"></a>3 面包屑</h3><p>简报有了骨干和血肉，我们就要开始为简报画上一层简约好看，让人赏心悦目的表皮啦！</p>
+<h4 id="内容"><a href="#内容" class="headerlink" title="内容"></a>内容</h4><p>承接前文强调的，内容应该简洁易懂，在我们安排简报内容时，自然不可忽略能让观众好消化的内容分量。最好，遵守简报<strong>一张一重点</strong>的原则，以免太多字。</p>
+<p>我们可以将原始内容拆分成小段落，让观众好消化。</p>
+<p>首先，将原始内容在电脑上直接拆分，并在每个段落钱加上编号。文字量较大的懒人图解简报版面，文字内容请控制在 <strong>60 个字以下</strong> ，就能兼顾资讯清楚与画面美观。如果真的有很多话要说，需要多点字数才能说明清楚，那极限就是 <strong>90 个字</strong>。</p>
+<p>编码就是懒人图解简报的页码，你可以借此看看自己的懒人图解简报是否页数太多了。一份懒人图解简报<strong>不要超过 40 页</strong>，不然会让观众看得很累，因此如果在拆分内容时发现页数很多，建议可以改写内容，或是将其拆成好几份懒人图解简报，以免让观众的负担太大。</p>
+<h4 id="排版"><a href="#排版" class="headerlink" title="排版"></a>排版</h4><p>前面的准备，让正式的图解简报制作，变得高效快速。只需把内容文字转换成图像即可。</p>
+<p>这时，需注意，图解简报的核心原则：<strong>简洁，就是美</strong>。这是因为，比起主观的美，和设计师的经验与境界相比，做到 “简洁” ，是我们能达到且相对高效的成果。</p>
+<p>要做出简洁的图解简报，排版时，技巧有三，<strong>对齐</strong>、<strong>留白</strong>与<strong>色彩</strong>。</p>
+<p><strong>对齐</strong>，是因为人很喜欢看画面上看起来不太一样的地方。这样的话，大脑就很容易因这些地方分散注意力，很耗费脑力资源。所以，简洁的图解简报，让观众节省更多脑力去理解内容。做法也很简单，只需用插入直线的方法，把页面所有元素的直线与竖线都对齐即可。</p>
+<p><strong>留白</strong>，可以创造负空间，让观众的视觉上不会有压迫感，并让他们从资讯爆炸的窘境中脱离出来，获得片刻喘息。遵守一个原则 —— 每张简报只放一个重点。此外，记住 80% 法则，圆框、简报里面的图尽量不要超过框内面积的 80%。简言之，懒人图解简报，排版时，<strong>一张放一重点，上下左右留白</strong>。</p>
+<p><strong>色彩</strong>，是用以凸显重点，达到吸睛效果。色彩，是图解简报的图像运用以外，另外一项能吸睛的做法。故颜色的选择，可以是工作还是自己专业的颜色、自己喜爱的颜色或是自己个性的颜色。统一颜色的目的，是长久使用，以形成自己的固定风格，有助于建立个人品牌。配色方面，以选定的颜色，去专业色彩网站寻找使用的配色方案即可。须注意的是，图解简报要避免使用饱和度和亮度太高的颜色，避免长期盯着会感到刺眼。选色，应该做到 <strong>鲜艳而不刺眼</strong> 。</p>
+<p>另外，制作图解简报时，搭配颜色的大原则只有一个，那就是 <strong>中性色 + 强调色</strong> 。中性色为黑白灰，没有太强的存在感，却能衬托其他颜色。强调色则是前面选出来的主颜色。需注意，强调色尽量不要超过两个，最好只用一种强调色，以不模糊焦点，更明确突出重点。中性色加强调色的做法，原理为格式塔完形心理学。</p>
+<h4 id="重中之重的扁平化图示"><a href="#重中之重的扁平化图示" class="headerlink" title="重中之重的扁平化图示"></a>重中之重的扁平化图示</h4><p>截至目前，我们已经了解，制作懒人图解简报，是本着一颗分享知识的心，让观众了解他们原本不懂的东西。这时，精准定位受众并掌握他们渴望与害怕的事物，让我们能更好地跟他们沟通分享，甚至预测问题，来有效解决他们的痛点，最后达到节省他们的时间又促进他们行动的结果。此外，分享知识的本质，让我们无法忽略内容这一重要项目。这时，我们需要建立一套框架，如作者分享的 SCAN 法则，提升沟通效率之余，也便于批量制作图解简报。如此，每份图解简报在有或没有主讲人的情况下，都能发挥更大优势，那么，我们进而得以建立自己的品牌，获得知名度，以自身专业且独特的信息，交换读者或观众的信任。</p>
+<p>最后，我们来谈谈作者在这本书独到的分享，也是我个人收获最大的概念，<strong>扁平化图示</strong>。</p>
+<p>对于为什么图解简报的用图应选择扁平化图示？本书作者林长扬认为，制作图解简报，选择扁平化图示，是为了<strong>让观众快速理解，形成秒懂的优势</strong>。扁平化图示不止吸睛、让观众秒懂，还有简洁和带有亲切感的优点，比起风格各异的高清大图，可谓更好的选项。</p>
+<p>图像或影像，也属于资讯的一种，太多的话，比如一张高清全景照片，美则美矣，其实会让人疲乏。这时候，扁平化这种简单、不用花费太多脑力的图示，就容易吸引观众的注意力了。由于图示的单一、简洁形象，比起复杂的照片，资讯就更简洁、突出及明了。更让人惊喜的是，在一般情况下，图示甚至有跨语言高效沟通的效果。</p>
+<p>因此，跟内容互相辉映的扁平化图示，可以帮助观众更快速理解我们图解简报要说的重点。简而言之，懒人图解简报，除了文字、架构、排版、颜色以外，图像或影像，也是内容的一部分，我们需要统一思维角度，遵从 “简洁以为对方省时省力” 的原则，高效促使对方理解和行动。</p>
+<p>况且，对简报作者的我们而言，比起花非常多时间去找相对应的图来跟文字搭配，能发挥的空间还很少，甚至做不到想要的效果相比，用扁平化图示省时高效多了，而且还能统一整份或多份简报的风格，一举多得。</p>
+<p>了解扁平化图示的概念将为我们简报制作带来各种优势后，我们又该如何发想要放到简报中的扁平化图示呢？简单！以下是<strong>发想 “扁平化图像” 三步走</strong>：</p>
+<blockquote>
+<p>💡 理解 → 分解 → 再构筑</p>
+</blockquote>
+<p><strong>发想扁平化图示三步走</strong></p>
+<ol>
+<li><p><strong>理解</strong>，要找出可以转化图像的关键字句。</p>
+<blockquote>
+<p>在资讯爆炸的年代，我们要为观众着想，不应该再让观众接收过多资讯，而是提高讯噪比。讯噪比是资讯与杂讯的比值，讯噪比越高，代表越清晰；越低就代表你这东西充满了杂讯。</p>
+</blockquote>
+<p>因此，发想扁平化图像的第一步，要做的就是过滤资讯，即找出重点。我们需要审视一次原始内容，想想这一段的内容里面，什么是最重要的，把当中的关键字给抓出来。</p>
+<p>换言之，扁平化三步走第一步，理解，就是抓出关键字。把关键字抓出来之后，再针对关键字去寻找相对应的扁平化图像，就会非常简单。</p>
+<p>此外，也可以把图解简报内容的每一段重点抓出来，并且将重点里面最重要那一句话标出来，这一句里面最重要的关键字又是什么，也找出来。这样层层剖析拆解，你就可以利用<strong>这句话</strong>去设计<strong>图解简报的画面</strong>，更可以从<strong>关键字</strong>去发想画面中最重要的那一个<strong>扁平化图示</strong>。</p>
+</li>
+<li><p><strong>分解</strong>，是手绘草图。</p>
+<p>理解，即抓出关键字后，接下来要做的是手绘，类似于绘制漫画或影视拍摄前的分镜草稿。例如，关键字抓出来之后，就把每一个关键字都画出相对应的图像，借由手绘的过程，就能进一步理清想要呈现的画面是什么样的，同时也能促进思考。</p>
+<p>不用担心自己画不出来。<strong>扁平化的核心概念，就是要把那些装饰性的东西、复杂性的东西统统去掉，只要如实展现事物的本质就可以</strong>，所以在画扁平化图像时，不用拥有很厉害的经验或是艺术家的技巧，只要把脑中所想到的物品，以简单的轮廓跟特征画出来就好了。</p>
+</li>
+<li><p><strong>再构筑</strong>，是找到符合概念的图像的方法。</p>
+<p>接下来，我们要把画出来的手稿，实际地变成扁平化图像。方法有二，一是自己制作；二是上网找图库，比如作者林长扬推荐的 noun project 或 human pictogram。</p>
+<p>不知道如何选择图示时，可以先定下简报适用的风格，再照着挑。如果有的关键字不知道该运用什么图示，可用 “时地人事物” 来做发想。</p>
+<p>完成这一步，我们就已经把图解简报内容转化成扁平化图像了。</p>
+</li>
+</ol>
+<p>再次给大家简单总结，发想扁平化图示三步走，是 “理解 → 分解 → 再构筑” 。换句话说，就是找出关键字 → 手绘分镜草稿 → 参照手稿，自己制图或上网找图。</p>
+<h4 id="手稿"><a href="#手稿" class="headerlink" title="手稿"></a>手稿</h4><p>如何把图解简报的每段内容<strong>拆分</strong>，转换成一张张的<strong>手稿</strong>，来实际<strong>制作</strong>成有图有文的图解简报？同样是<strong>三步走</strong>：</p>
+<blockquote>
+<p>拆分 → 画手稿 → 加连接页</p>
+</blockquote>
+<p><strong>从零到一：完成 「原文」 → 「手稿」 → 「简报」 的蜕变</strong></p>
+<ol>
+<li><p><strong>拆分</strong>时，需遵守下列原则：</p>
+<ul>
+<li>一张图解简报页面只讲<strong>一个</strong>重点</li>
+<li>每一页的文字内容控制在 <strong>60 个字</strong>以下</li>
+<li>若有很多内容，记得极限就是 <strong>90 个字</strong></li>
+</ul>
+<p>这是因为，内容过多，便会影响观众的阅读舒适度。另外，还需注意的是，图解简报一般属于 “没有人讲解的简报” ，因此，太过精炼的文字，会导致观众无法理解内容，故<strong>适当的文字说明</strong>是必须的。</p>
+</li>
+<li><p><strong>画手稿</strong>，即<strong>手绘</strong>时，只需要简单地依照重点 <strong>想象画面</strong> 、 <strong>画成手稿</strong> 就可以了。</p>
+<p>拆分好重点之后，就能绘制分镜稿增进制作效率。这里其实就是上节说过的流程：</p>
+<blockquote>
+<p>找出关键字 → 手绘分镜草稿 → 参照手稿制作简报</p>
+</blockquote>
+<p> 注意事项为，一开始可以画出单一图像就好了，例如，挑出文字内容中最重要的关键字，再把关键字画出相对的图像就好。</p>
+<p> 如果你对于单一图像的手稿越来越有心得，或是本身绘画功力有一定水平，可以尝试把整段文字内容画成场景，简单来说就像插画一样，把各个人物、情节、样貌都画出来，为观众创造画面感，让他们对内容有更深的感受。</p>
+<p> 简言之，图解简报越有画面感，越能吸引观众的注意力，但这考验每个人的想象力与手绘力，并且会影响实际制作的易难度。因此，建议不追求每一张图解简报都要画成场景，大部分的内容只要从 “单一图像” 开始就好 —— 若对某一段文字内容特别有感觉的话，再把它制作成场景，当做吸睛的焦点，避免观众视觉疲劳。</p>
+</li>
+<li><p><strong>制作</strong>时，别忘加上<strong>连接页</strong>。</p>
+<p>基本上，到这阶段，我们整份简报制作，雏形已现。最后一步，在做好的简报加上连接页，是为使图解简报内容不那么生硬、平铺直叙地一直讲出重点，而能更贴近观众、让图解简报<strong>更有温度一点</strong>。</p>
+<p>连接页的例子包括，适时加入<strong>对话、发言、段落页</strong>…… 等图解。这么一来，观众阅读时，<strong>有时间可以喘口气</strong>，不会一下接收太多知识，也调整阅读的<strong>节奏</strong>，有助于更有效吸收内容。</p>
+<p>以下是原书作者建议的连接页<strong>小技巧</strong>：</p>
+<ul>
+<li><strong>作者发言</strong>：把原本平铺直叙的内容，拆除一段话，做成作者本人在跟观众说话的样子，让观众更有亲切感。</li>
+<li><strong>记者采访</strong>：在说明一个重点之前，先抛出问句，引发观众思考，如做成有人采访本人的场景，增加图解简报的独特感。</li>
+<li><strong>重点提醒</strong>：在重点前，放上一张该段落内容的标题，并配上相对应的图，作为重点提醒的段落页，可以提高观众的注意力，准备吸收知识点。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="4-回到人间"><a href="#4-回到人间" class="headerlink" title="4 回到人间"></a>4 回到人间</h3><p>​		到此为止，经过使用纸笔规划图解简报内容，完成拆分、画手稿和加连接页三个步骤之后，制作进度已经达成 80%。剩下的 20%，才打开电脑，下载相对应的扁平化图像，把图像跟文字排列成手稿呈现的版面，并注意排版技巧，这样，就能高效产出一张张图解简报啦！</p>
+<p>​		说到这里，如果你已对简报制作有些感觉，或是颇为心动，那就一起来一显身手吧！</p>
+<h3 id="Changelog"><a href="#Changelog" class="headerlink" title="Changelog"></a>Changelog</h3><ul>
+<li>2022-11-17 简创建，完成初稿。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>读书笔记</category>
+      </categories>
+      <tags>
+        <tag>笔记</tag>
+        <tag>教程</tag>
+        <tag>工具，书，简报，图解</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>输出清单</title>
+    <url>/output/</url>
+    <content><![CDATA[<p><img src="/output/image.png" alt="image"></p>
+<h2 id="输出清单"><a href="#输出清单" class="headerlink" title="输出清单"></a>输出清单</h2><span id="more"></span>
+
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>子项目</th>
+<th>输出</th>
+</tr>
+</thead>
+<tbody><tr>
+<td> S1 <br>学<br>习</td>
+<td> - 读书<br>- 课程<br>- 学科<br>- 其他学习</td>
+<td>【Blog ① | YouTube】<br><br>- 读书笔记<br>- 课程笔记<br>- 学科笔记<br>- 学习笔记</td>
+</tr>
+<tr>
+<td> S2 <br>CG</td>
+<td>- 课程<br>- 素材<br>- 练习</td>
+<td>【Blog ① &amp; ③ | Pixiv】<br><br>- 学习笔记<br>- 练习<br>- 原创<br>- 同人</td>
+</tr>
+<tr>
+<td> S3 <br>生<br>活</td>
+<td> - 信息<br>- 精力<br>- 健康<br>- 财务<br>- 形象<br>- 人际</td>
+<td>【Blog ① &amp; ② &amp; ③ | YouTube】<br><br>- 读书笔记<br>- 课程笔记<br>- 学习笔记</td>
+</tr>
+<tr>
+<td> S5 <br>文<br>学</td>
+<td> - 古诗：诗经、楚辞、古诗源<br>- 中古诗：唐诗、宋词、全唐诗<br>- 个人诗集：王维、李白、杜甫、白居易、李商隐、韩愈、李煜、苏轼、辛弃疾、李清照……<br>- 史书：前四史、全唐书、春秋左传、国语、战国策、晏子春秋<br>- 经典：四书五经、道家经典、法家经典、佛家经典（十三经）、兵家经典、阴阳家经典、圣经……<br>- 古典小说：四大名著、章回小说、公案侠义爱情神魔仙术道法主题小说、笔记小说……<br>- 流行小说：武侠小说、侦探推理悬疑小说……<br>- 经典散文：鲁迅、钱钟书、张爱玲、汪曾祺、王小波……<br>- 西方名著：小说、短篇故事、散文<br>- 外文诗词：西文名诗、俄文名诗、泰戈尔、日文俳句<br>- 文学名著：诺奖名著、日文名著小说<br><br>- 西方经典：哲学、科学、数学、物理学、生物学、化学、社会学、心理学、政治学、经济学……<br><br>- 写作学习（书、课、学科、其他学习……）<br>- 写作练习<br>- 同人文</td>
+<td>【Blog ① &amp; ② &amp; ③ | YouTube】<br><br>- 词汇 &amp; 意象列表、清单<br>- 短语句子 &amp; 修辞、清单<br>- 小结笔记<br>- 总结笔记<br>- 经典莫因列表、清单<br>- 事件列表、清单<br>- 人物列表、清单<br><br>- 术语 &amp; 观点 &amp; 例子列表、清单<br>- 叙事卡<br>- 观察发现列表、清单</td>
+</tr>
+<tr>
+<td> S6 <br>外<br>语</td>
+<td> - 日语 N1-N5 单词、其他单词<br>- 日语 N1-N5 语法<br>- 日语常用短语<br>- 日语惯用语<br>- 日文句子<br><br>- 日语听力练习、动漫笔记<br>- 英语 COCA 2000 单词、其他单词<br>- 英语词根、词缀列表<br>- 英语语法<br>- 英语句型<br>- 英语听力练习、播客、英美剧笔记<br>- 英语常用短语<br><br>- 英语惯用句<br>- 英语句子<br>- 英语口语练习<br>- 翻译练习<br>- 翻译笔记<br>- 粤语口语练习<br>- 填词练习<br>- 音乐理论笔记<br>- 编程笔记<br>- 数学笔记</td>
+<td>【Blog ① &amp; ② | YouTube | Anki】<br><br>- 错题本<br>- 相关列表<br><br>- 相关清单<br>- 相关笔记<br>- 相关投影片<br>- 相关练习<br>- 相关影片</td>
+</tr>
+<tr>
+<td> W <br>工<br>作</td>
+<td> - 观摩笔记<br>- 数学讲义 &amp; 练习<br>- 高级数学讲义 &amp; 练习<br>- 科学讲义 &amp; 练习<br>- 生物学讲义 &amp; 练习<br>- 物理学讲义 &amp; 练习<br>- 马来文语法讲义 &amp; 练习<br>- 马来文作文、阅读理解讲义 &amp; 练习<br>- 华文语法讲义 &amp; 练习<br>- 华文作文、阅读理解讲义 &amp; 练习<br>- 新加坡华文讲义 &amp; 练习<br>- 雅思英文讲义 &amp; 练习<br>- 日检日文讲义 &amp; 练习<br>- 华语教学课件制作分享</td>
+<td>【Blog ② | YouTube | Google Classroom | Anki | Shopee | Lazada | Facebook】<br><br>- 讲义 / 笔记<br>- 教材（练习 &amp; 答案）<br>- 课程影片<br>- 课程复习卡包<br>- 其他课件制作分享</td>
+</tr>
+<tr>
+<td> E<br>娱<br>乐</td>
+<td> - 动画<br>- 漫画<br>- 游戏<br>- 小说<br>- 连续剧<br>- 电影<br>- 音乐：日系、古风、古典<br>- 歌曲：古风、华语、粤语、日韩、西洋<br>- 纪录片（NHK、BBC、National Geography、Discovery……）<br>- 纪实文学、报导文学、深度报导、调查报导……<br><br>RSS 订阅：微信公众号、其他新闻网站 &amp; 网站 &amp; Blog<br>- 绘图创作<br>- 小说创作</td>
+<td>【Blog ③ | Pixiv | Lofter】<br><br>- 读后感、观后感、听后感等心得笔记<br>- 图像素材<br>- 小说创作<br>- 绘图创作<br>- 图文同人</td>
+</tr>
+<tr>
+<td> Z<br>极<br>简</td>
+<td> - 食物<br>- 衣服<br>- 住所<br>- 财务<br>- 时间表<br>- 任务表<br>……</td>
+<td>【Blog ① &amp; ② &amp; ③】<br><br>- 学习笔记<br>- 列表清单<br>- 心得文章<br>- ……</td>
+</tr>
+</tbody></table>
+<p>备忘录：</p>
+<ul>
+<li>YouTube → Facebook </li>
+<li>Blog → Facebook（Blog ②）</li>
+</ul>
+<p>#To-do</p>
+<ul>
+<li>卡片工具清单</li>
+<li>信息工具清单</li>
+</ul>
+<h3 id="Changelog"><a href="#Changelog" class="headerlink" title="Changelog"></a>Changelog</h3><ul>
+<li>2022-11-25 简创建，完成初稿。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>备忘录</category>
+      </categories>
+      <tags>
+        <tag>笔记</tag>
+        <tag>记录，清单</tag>
+      </tags>
+  </entry>
+</search>
