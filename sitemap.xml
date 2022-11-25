@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://lilianylee.github.io/output/</loc>
+    <loc>https://lilianylee.github.io/hexo+github+next/</loc>
     
     <lastmod>2022-11-25</lastmod>
     
@@ -11,9 +11,9 @@
   </url>
   
   <url>
-    <loc>https://lilianylee.github.io/hexo+github+next/</loc>
+    <loc>https://lilianylee.github.io/output/</loc>
     
-    <lastmod>2022-11-23</lastmod>
+    <lastmod>2022-11-25</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
