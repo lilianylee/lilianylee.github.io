@@ -1057,7 +1057,10 @@
       <tags>
         <tag>笔记</tag>
         <tag>教程</tag>
-        <tag>工具，书，简报，图解</tag>
+        <tag>工具</tag>
+        <tag>书</tag>
+        <tag>简报</tag>
+        <tag>图解</tag>
       </tags>
   </entry>
   <entry>
@@ -1134,13 +1137,14 @@
       </categories>
       <tags>
         <tag>笔记</tag>
-        <tag>记录，清单</tag>
+        <tag>记录</tag>
+        <tag>清单</tag>
       </tags>
   </entry>
   <entry>
-    <title>2022-12-02 文学笔记</title>
+    <title>文学笔记 | 2022-12-02</title>
     <url>/literature-note-221202/</url>
-    <content><![CDATA[<h1 id="2022-12-02-文学笔记"><a href="#2022-12-02-文学笔记" class="headerlink" title="2022-12-02 文学笔记"></a>2022-12-02 文学笔记</h1><p><img src="/literature-note-221202/image.png" alt="image"></p>
+    <content><![CDATA[<h1 id="文学笔记-2022-12-02"><a href="#文学笔记-2022-12-02" class="headerlink" title="文学笔记 | 2022-12-02"></a>文学笔记 | 2022-12-02</h1><p><img src="/literature-note-221202/image.png" alt="image"></p>
 <span id="more"></span>
 
 <h2 id="《诗经》"><a href="#《诗经》" class="headerlink" title="《诗经》"></a>《诗经》</h2><h3 id="《简兮》"><a href="#《简兮》" class="headerlink" title="《简兮》"></a>《简兮》</h3><p><strong>生词</strong></p>
@@ -1223,6 +1227,26 @@
         <tag>诗经</tag>
         <tag>唐诗</tag>
         <tag>唐诗三百首</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>CG 练习 | 水果塑造</title>
+    <url>/cg-practice-apple/</url>
+    <content><![CDATA[<h2 id="CG-练习-水果塑造"><a href="#CG-练习-水果塑造" class="headerlink" title="CG 练习 | 水果塑造"></a>CG 练习 | 水果塑造</h2><p><img src="/cg-practice-apple/practice-apple-221202.png" alt="practice-apple-221202"></p>
+<span id="more"></span>
+
+
+
+<h3 id="Changelog"><a href="#Changelog" class="headerlink" title="Changelog"></a>Changelog</h3><ul>
+<li>2022-12-02 简创建，更新练习。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>CG练习</category>
+      </categories>
+      <tags>
+        <tag>CG</tag>
+        <tag>练习</tag>
       </tags>
   </entry>
 </search>
