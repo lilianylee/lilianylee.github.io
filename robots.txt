@@ -11,6 +11,7 @@ Allow: /tools/
 Allow: /techniques/
 Allow: /mind/
 Disallow: /404/
+Disallow: /Privacy-Policy/
 Disallow: /vendors/
 Disallow: /fonts/
 Disallow: /vendors/
