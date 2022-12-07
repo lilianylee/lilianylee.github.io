@@ -131,8 +131,6 @@ theme: next
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
   type: git
-  repo: 
-    git@github.com:lilianylee/lilianylee.github.io.git
-    https://github.com/lilianylee/github-actions-blog.git
+  repo: git@github.com:lilianylee/lilianylee.github.io.git
   branch: main
 
