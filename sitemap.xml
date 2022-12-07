@@ -2,6 +2,24 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://lilianylee.github.io/cg-practice-apple/</loc>
+    
+    <lastmod>2022-12-07</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://lilianylee.github.io/literature-note-221202/</loc>
+    
+    <lastmod>2022-12-07</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://lilianylee.github.io/Privacy-Policy/index.html</loc>
     
     <lastmod>2022-12-07</lastmod>
@@ -23,24 +41,6 @@
     <loc>https://lilianylee.github.io/google866ee3840abb121b.html</loc>
     
     <lastmod>2022-12-05</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://lilianylee.github.io/cg-practice-apple/</loc>
-    
-    <lastmod>2022-12-02</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://lilianylee.github.io/literature-note-221202/</loc>
-    
-    <lastmod>2022-12-02</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
