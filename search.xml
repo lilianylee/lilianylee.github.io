@@ -1041,17 +1041,29 @@
   <entry>
     <title>CG 练习 | 水果塑造</title>
     <url>/cg-practice-apple/</url>
-    <content><![CDATA[<h2 id="CG-练习-水果塑造"><a href="#CG-练习-水果塑造" class="headerlink" title="CG 练习 | 水果塑造"></a>CG 练习 | 水果塑造</h2><p><img src="/cg-practice-apple/practice-apple-221202.png" alt="practice-apple-221202"></p>
+    <content><![CDATA[<h2 id="cg-练习-水果塑造">CG 练习 | 水果塑造</h2>
+<figure>
+<img src="/cg-practice-apple/practice-apple-221202.png" alt="practice-apple-221202">
+<figcaption aria-hidden="true">practice-apple-221202</figcaption>
+</figure>
 <span id="more"></span>
-
-
-
-<h3 id="Changelog"><a href="#Changelog" class="headerlink" title="Changelog"></a>Changelog</h3><ul>
+<p><span class="math display">\[
+\begin{equation}\label{eq2}
+\begin{aligned}
+a &amp;= b + c \\
+  &amp;= d + e + f + g \\
+  &amp;= h + i
+\end{aligned}
+\end{equation}
+\]</span></p>
+<h3 id="changelog">Changelog</h3>
+<ul>
 <li>2022-12-02 简创建，更新练习。</li>
 </ul>
 
     <div class="fb-comments" data-href="https://lilianylee.github.io/cg-practice-apple/" data-width="100%" data-numposts="10" data-order-by="reverse-time" data-colorscheme="light"></div>
-  ]]></content>
+  
+]]></content>
       <categories>
         <category>CG练习</category>
       </categories>
