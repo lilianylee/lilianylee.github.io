@@ -1,0 +1,57 @@
+name: hexo_deploy
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  GIT_USER: lilianylee
+  GIT_EMAIL: leeikki93@gmail.com
+  DEPLOY_REPO: lilianylee/lilianylee.github.io
+  DEPLOY_BRANCH: main
+
+jobs:
+  build:
+    name: Build on node ${{ matrix.node_version }} and ${{ matrix.os }}
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        node_version: [18.x]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Checkout deploy repo
+        uses: actions/checkout@v3
+        with:
+          repository: git@github.com:lilanylee/lilianylee.github.io.git
+          ref: main
+          path: .deploy_git
+
+      - name: Use Node.js 18.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: "18.x"
+
+      - name: Configuration environment
+        env:
+          HEXO_DEPLOY_PRI: ${{secrets.HEXO_DEPLOY_PRI}}
+        run: |
+          sudo timedatectl set-timezone "Asia/Shanghai"
+          mkdir -p ~/.ssh/
+          echo "$HEXO_DEPLOY_PRI" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
+          git config --global user.name "lilianylee"
+          git config --global user.email "leeikki93@gmail.com"
+
+      - name: Install dependencies
+        run: |
+          npm install
+
+      - name: Deploy hexo
+        run: |
+          npm run deploy

@@ -4,7 +4,7 @@ type: "post"
 date: 2022-12-02 23:48:56
 tags: [CG,练习]
 categories: [CG练习]
-
+mathjax: true
 ---
 
 ## CG 练习 | 水果塑造
@@ -13,6 +13,16 @@ categories: [CG练习]
 
 <!--more-->
 
+
+$$
+\begin{equation}\label{eq2}
+\begin{aligned}
+a &= b + c \\
+  &= d + e + f + g \\
+  &= h + i
+\end{aligned}
+\end{equation}
+$$
 
 
 ### Changelog
